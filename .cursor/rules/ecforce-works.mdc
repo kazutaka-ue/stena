@@ -1,0 +1,6 @@
+---
+description: works.html へ貼り付けて ECフォース本番変換する指示のとき。lp-code-vars.md の {# lp-code-* #} と file_root_path。
+alwaysApply: false
+---
+
+作業前にリポジトリルートの AGENTS.md「ECフォース本番変換」と lp-code-vars.md に必ず従う。

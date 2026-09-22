@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STENA｜無垢ステンレスタンク セクション リデザイン案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --graphite:#131619;
+  --graphite-2:#1C2126;
+  --graphite-3:#252B31;
+  --steel:#CDD5DA;
+  --steel-dim:#7F8990;
+  --steel-dimmer:#5A636A;
+  --titanium:#7FB4D0;      /* チタン酸化被膜の青＝素材由来のアクセント */
+  --oxide:#A2603A;         /* 錆色。従来品の図解にのみ使用 */
+  --paper:#E9EDEF;         /* 素材パートの反転バンド */
+  --paper-2:#DDE3E6;
+  --line:rgba(205,213,218,.16);
+  --line-dark:rgba(19,22,25,.16);
+  --mincho:"Shippori Mincho B1", serif;
+  --sans:"Noto Sans JP", sans-serif;
+  --mono:"IBM Plex Mono", monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--graphite);
+  color:var(--steel);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.9;
+  letter-spacing:.02em;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:640px;margin:0 auto;padding:0 22px}
+section{padding:76px 0}
+/* ---------- 共通パーツ ---------- */
+h2{
+  font-family:var(--mincho);
+  font-weight:800;
+  font-size:clamp(25px,7.2vw,34px);
+  line-height:1.5;
+  letter-spacing:.01em;
+  color:#EAF0F3;
+}
+.lead{
+  margin-top:18px;
+  font-size:15px;line-height:2.05;
+  color:var(--steel-dim);
+}
+.note{
+  font-family:var(--mono);
+  font-size:10.5px;line-height:1.7;
+  color:var(--steel-dimmer);
+  letter-spacing:.04em;
+}
+
+/* ---------- 1. ヒーロー ---------- */
+.hero{
+  padding:96px 0 84px;
+  background:
+    radial-gradient(120% 70% at 50% 0%, #2A3138 0%, #171B1F 46%, var(--graphite) 78%);
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+.hero h1{
+  font-family:var(--mincho);
+  font-weight:800;
+  font-size:clamp(29px,8.6vw,44px);
+  line-height:1.48;
+  color:#F1F5F7;
+  letter-spacing:.005em;
+}
+.hero h1 .thin{
+  display:block;
+  font-size:.62em;
+  font-weight:500;
+  color:var(--steel-dim);
+  letter-spacing:.06em;
+  margin-bottom:14px;
+}
+.hero-lead{
+  margin:26px auto 0;
+  max-width:25em;
+  font-size:15px;line-height:2.1;
+  color:var(--steel-dim);
+}
+.hero-lead b{color:#DCE4E8;font-weight:500}
+.hero-tag{
+  margin-top:34px;
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  color:var(--titanium);
+  border:1px solid rgba(127,180,208,.36);
+  border-radius:999px;
+  padding:8px 17px;
+}
+.hero-tag i{width:5px;height:5px;border-radius:50%;background:var(--titanium);font-style:normal}
+
+/* ---------- 2. 断面（シグネチャー） ---------- */
+.cut{background:var(--graphite)}
+.cutgrid{margin-top:34px;display:grid;gap:16px}
+.panel{
+  border:1px solid var(--line);
+  border-radius:3px;
+  background:linear-gradient(180deg,#1B2025 0%, #16191D 100%);
+  padding:20px 18px 22px;
+}
+.panel.is-stena{
+  border-color:rgba(127,180,208,.34);
+  background:linear-gradient(180deg,#1E262C 0%, #171C21 100%);
+}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
+.panel-name{font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;color:var(--steel-dim)}
+.panel.is-stena .panel-name{color:var(--titanium)}
+.panel-sub{font-size:11px;color:var(--steel-dimmer);letter-spacing:.04em}
+.panel svg{width:100%;height:auto;display:block}
+.verdict{
+  margin-top:15px;padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:14px;line-height:1.85;color:var(--steel-dim);
+}
+.panel.is-stena .verdict{color:#DCE4E8}
+.verdict b{font-weight:500;color:#EAF0F3}
+.state{
+  margin-top:26px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--titanium);display:flex;align-items:center;gap:12px;
+}
+.state::before,.state::after{content:"";flex:1;height:1px;background:var(--line)}
+
+
+
+/* ---------- 3. メリット2つ ---------- */
+.merits{background:linear-gradient(180deg,#131619 0%,#171B1F 100%);border-top:1px solid var(--line)}
+.merit{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:24px 0;border-bottom:1px solid var(--line);
+}
+.merit:first-of-type{border-top:1px solid var(--line)}
+.merit-ico{flex:0 0 46px;width:46px;height:46px}
+.merit h3{
+  font-family:var(--mincho);font-weight:700;
+  font-size:19px;line-height:1.55;color:#EFF4F6;letter-spacing:.01em;
+}
+.merit p{margin-top:8px;font-size:14px;line-height:1.95;color:var(--steel-dim)}
+
+
+
+/* ---------- 5. 素材（反転バンド） ---------- */
+
+/* ---------- 締め ---------- */
+.closing{
+  background:var(--graphite);
+  text-align:center;padding:84px 0 96px;
+}
+.closing p{
+  font-family:var(--mincho);font-weight:700;
+  font-size:clamp(20px,5.8vw,26px);line-height:1.95;color:#EAF0F3;
+}
+.closing .sub{
+  font-family:var(--sans);font-weight:300;
+  font-size:14px;line-height:2;color:var(--steel-dim);margin-top:20px;
+}
+
+
+/* ---------- 写真 ---------- */
+/* ---------- ヒーティングパイプ ---------- */
+.pipe{
+  background:
+    radial-gradient(110% 60% at 50% 0%, #22282E 0%, #171B1F 55%, var(--graphite) 100%);
+  border-top:1px solid var(--line);
+}
+.pt{margin-top:30px}
+.pt-row{padding:0}
+.pt-form{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+  color:var(--titanium);display:block;margin-bottom:9px;
+}
+.pt-row h3{
+  font-family:var(--mincho);font-weight:700;font-size:19px;
+  line-height:1.55;color:#EFF4F6;
+}
+.pt-row p{margin-top:9px;font-size:14px;line-height:1.95;color:var(--steel-dim)}
+
+
+
+/* ---------- 熱まわりの部品 ---------- */
+.heat{background:var(--graphite);border-top:1px solid var(--line)}
+.parts{margin-top:30px}
+.part{padding:22px 0;border-bottom:1px solid var(--line)}
+.part:last-of-type{border-bottom:none;padding-bottom:6px}
+.part-where{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  color:var(--titanium);display:block;margin-bottom:8px;
+}
+.part h3{font-family:var(--mincho);font-weight:700;font-size:18px;line-height:1.55;color:#EFF4F6}
+.part p{margin-top:9px;font-size:14px;line-height:1.95;color:var(--steel-dim)}
+.spec-d{
+  display:inline-block;margin-top:13px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.05em;color:var(--steel-dimmer);
+  border-left:2px solid rgba(127,180,208,.45);padding:6px 11px;
+  background:rgba(255,255,255,.022);
+}
+/* ---------- 職人技 ---------- */
+.block h3{
+  margin-top:22px;font-family:var(--mincho);font-weight:800;
+  font-size:clamp(21px,5.8vw,26px);line-height:1.55;color:#EFF4F6;
+}
+.block p{margin-top:12px;font-size:14.5px;line-height:1.95;color:var(--steel-dim)}
+
+/* ---------- 挙動 ---------- */
+@media (min-width:700px){
+  .cutgrid{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 1. ヒーロー：3段落→1行に圧縮 ============ -->
+<header class="hero">
+  <div class="wrap">
+    <h1><span class="thin">医療グレードのステンレスタンク</span>剥がれるところが、<br>ありません。</h1>
+    <p class="hero-lead">STENAのタンクは、<b>素材そのものが錆に強いステンレス</b>。<br>守るための膜がいらないので、<br>剥がれたり傷んだりする部分がありません。</p>
+
+    <span class="hero-tag"><i></i>医療グレード SUS316Ti</span>
+  </div>
+</header>
+
+<!-- ============ 2. シグネチャー：比較表 → 断面ビジュアル ============ -->
+<section class="cut">
+  <div class="wrap">
+    <h2>どこを削っても、<br>同じステンレス。</h2>
+    <p class="lead">加湿器のタンクは、内側をコーティングして錆を防ぐのが一般的です。STENAが選んだのは、素材そのものが錆に強いステンレス。厚みのどこを取っても同じ金属なので、削れても性質が変わりません。</p>
+
+    <p class="state">どちらも、使い続けたときのイメージです。</p>
+    <div class="cutgrid">
+      <!-- 従来型 -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-name">一般的なタンク</span>
+          <span class="panel-sub">コーティング仕上げ</span>
+        </div>
+        <svg viewBox="0 0 300 168" role="img" aria-label="コーティングされたタンク壁の断面。年数が経つと膜が割れて下地が露出する">
+          <defs>
+            <linearGradient id="base1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6E7981"/><stop offset="100%" stop-color="#474F56"/>
+            </linearGradient>
+            <linearGradient id="coat1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#D3DBE0"/><stop offset="100%" stop-color="#9BA6AE"/>
+            </linearGradient>
+            <radialGradient id="rust1"><stop offset="0%" stop-color="#B76B3F"/><stop offset="100%" stop-color="#A2603A" stop-opacity="0"/></radialGradient>
+          </defs>
+          <text x="8" y="18" fill="#5A636A" font-family="IBM Plex Mono, monospace" font-size="9">水側</text>
+          <g stroke="#7FB4D0" stroke-opacity=".25">
+            <line x1="8" y1="30" x2="292" y2="30"/><line x1="8" y1="40" x2="292" y2="40"/>
+          </g>
+          <!-- 下地金属 -->
+          <rect x="8" y="72" width="284" height="62" fill="url(#base1)"/>
+          <g stroke="#3C444A" stroke-opacity=".5">
+            <line x1="8" y1="88" x2="292" y2="88"/><line x1="8" y1="104" x2="292" y2="104"/><line x1="8" y1="120" x2="292" y2="120"/>
+          </g>
+          <!-- 錆 -->
+          <g id="rustG" opacity="1">
+            <ellipse cx="70" cy="76" rx="30" ry="11" fill="url(#rust1)"/>
+            <ellipse cx="163" cy="76" rx="26" ry="10" fill="url(#rust1)"/>
+            <ellipse cx="238" cy="76" rx="22" ry="9" fill="url(#rust1)"/>
+          </g>
+          <!-- コーティング膜 -->
+          <rect x="8" y="56" width="284" height="16" fill="url(#coat1)"/>
+          <!-- ひび -->
+          <g id="crackG" stroke="#3A4248" stroke-width="1.4">
+            <path d="M70 56 l3 8 l-3 8"/><path d="M163 56 l-3 8 l3 8"/><path d="M238 56 l2 8 l-2 8"/>
+            <path d="M112 56 l-2 6"/><path d="M200 56 l2 6"/>
+          </g>
+          <!-- 剥離片 -->
+          <g id="flakeG">
+            <polygon points="150,56 178,56 176,72 152,72" fill="url(#coat1)" transform="rotate(-16 164 64) translate(0,-9)"/>
+          </g>
+          <line x1="8" y1="134" x2="292" y2="134" stroke="#2A3037"/>
+          <text x="8" y="150" fill="#5A636A" font-family="IBM Plex Mono, monospace" font-size="9">外側</text>
+          <g stroke="#9BA6AE" stroke-width=".8">
+            <line x1="296" y1="56" x2="296" y2="72"/><line x1="292" y1="56" x2="300" y2="56"/><line x1="292" y1="72" x2="300" y2="72"/>
+          </g>
+          <text x="288" y="50" fill="#9BA6AE" font-family="IBM Plex Mono, monospace" font-size="8.5" text-anchor="end">コーティング層</text>
+        </svg>
+        <p class="verdict">錆を防いでいるのは、ごく薄い膜です。使ううちに少しずつ削れていき、<b>一度剥がれた部分は元に戻りません。</b></p>
+      </div>
+
+      <!-- STENA -->
+      <div class="panel is-stena">
+        <div class="panel-head">
+          <span class="panel-name">STENA</span>
+          <span class="panel-sub">医療グレード無垢</span>
+        </div>
+        <svg viewBox="0 0 300 168" role="img" aria-label="無垢ステンレスの断面。年数が経っても層構造は変わらない">
+          <defs>
+            <linearGradient id="solid1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#EAF0F4"/><stop offset="18%" stop-color="#A9B6BE"/>
+              <stop offset="52%" stop-color="#D8E1E6"/><stop offset="100%" stop-color="#94A1A9"/>
+            </linearGradient>
+          </defs>
+          <text x="8" y="18" fill="#5A636A" font-family="IBM Plex Mono, monospace" font-size="9">水側</text>
+          <g stroke="#7FB4D0" stroke-opacity=".25">
+            <line x1="8" y1="30" x2="292" y2="30"/><line x1="8" y1="40" x2="292" y2="40"/>
+          </g>
+          <rect x="8" y="56" width="284" height="78" fill="url(#solid1)"/>
+          <g stroke="#7E8B93" stroke-opacity=".45">
+            <line x1="8" y1="72" x2="292" y2="72"/><line x1="8" y1="90" x2="292" y2="90"/>
+            <line x1="8" y1="108" x2="292" y2="108"/><line x1="8" y1="122" x2="292" y2="122"/>
+          </g>
+          <!-- 磨き戻る輝き -->
+          <g id="shineG"><rect x="8" y="56" width="284" height="7" fill="#FFFFFF" opacity=".5"/></g>
+          <line x1="8" y1="134" x2="292" y2="134" stroke="#2A3037"/>
+          <text x="8" y="150" fill="#5A636A" font-family="IBM Plex Mono, monospace" font-size="9">外側</text>
+          <g stroke="#7FB4D0" stroke-width=".8">
+            <line x1="296" y1="56" x2="296" y2="134"/><line x1="292" y1="56" x2="300" y2="56"/><line x1="292" y1="134" x2="300" y2="134"/>
+          </g>
+          <text x="288" y="50" fill="#7FB4D0" font-family="IBM Plex Mono, monospace" font-size="8.5" text-anchor="end">端から端まで、同じ素材</text>
+        </svg>
+        <p class="verdict"><b>表面から裏側まで、同じステンレスです。</b>多少削れても、錆に強い性質は変わりません。</p>
+      </div>
+    </div>
+
+    <p class="note" style="margin-top:22px">※ 図はコーティングの劣化を分かりやすく示したイメージです。実際の変化は、使用状況によって異なります。</p>
+  </div>
+</section>
+
+<!-- ============ 3. だから、2ついいことがある ============ -->
+<section class="merits">
+  <div class="wrap">
+    <h2>いつでも、<br>何度でも洗えます。</h2>
+
+    <div class="merit">
+      <svg class="merit-ico" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="21" fill="none" stroke="#7FB4D0" stroke-opacity=".35"/>
+        <path d="M16 15h12l-1.6 15.4a2 2 0 0 1-2 1.8h-4.8a2 2 0 0 1-2-1.8Z" fill="none" stroke="#CDD5DA" stroke-width="1.3"/>
+        <path d="M14 15h16" stroke="#CDD5DA" stroke-width="1.3"/>
+        <path d="M19 12h6" stroke="#7FB4D0" stroke-width="1.3"/>
+        <path d="M20 20v7M24 20v7" stroke="#7FB4D0" stroke-width="1.1" stroke-opacity=".8"/>
+      </svg>
+      <div>
+        <h3>クエン酸を、<br>そのまま使えます。</h3>
+        <p>傷めてしまうコーティングがないので、汚れが気になったときにすぐ洗えます。洗いすぎを心配しなくていいのは、無垢のステンレスならではです。</p>
+      </div>
+    </div>
+
+    <div class="merit">
+      <svg class="merit-ico" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="22" r="21" fill="none" stroke="#7FB4D0" stroke-opacity=".35"/>
+        <path d="M22 11l2.6 6.6 6.6 2.6-6.6 2.6L22 29.4l-2.6-6.6-6.6-2.6 6.6-2.6Z" fill="none" stroke="#CDD5DA" stroke-width="1.3"/>
+        <circle cx="31" cy="30" r="2.6" fill="none" stroke="#7FB4D0" stroke-width="1.1"/>
+        <circle cx="14" cy="31" r="1.6" fill="none" stroke="#7FB4D0" stroke-width="1.1"/>
+      </svg>
+      <div>
+        <h3>洗うほど、<br>輝きが戻ります。</h3>
+        <p>光っているのは塗装ではなく、金属そのものです。表面が少し削れても、下から同じステンレスが現れるので、くすんだままにはなりません。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ============ 6. 心臓部：ヒーティングパイプ ============ -->
+<section class="pipe">
+  <div class="wrap">
+    <h2>速いだけでは、<br>ありません。</h2>
+    <p class="lead">5分で蒸気を生むヒーティングパイプは、清潔さを保つ部品でもあります。水に混ざっていたものを引き受け、洗えばまた新品の輝きに戻ります。</p>
+
+
+
+    <div class="pt">
+      <div class="pt-row" style="margin-bottom:26px">
+        <span class="pt-form">沸かしてから、蒸気にする</span>
+        <h3>部屋に出ていくのは、<br>きれいな水蒸気です。</h3>
+        <p>水を沸かすと、溶けていたミネラル分はパイプ側に残ります。家具や床に白い粉が残りにくく、パイプに残った分は洗えば落とせます。</p>
+      </div>
+      <div class="pt-row">
+        <span class="pt-form">やわらかな光沢</span>
+        <h3>使い続けても、<br>美しさが変わりません。</h3>
+        <p>316Tiステンレス特有の、落ち着いた光沢です。熟練の職人が一つひとつ手作業で磨き上げているので、指でなぞっても段差がありません。汚れが引っかかりにくく、繰り返し使っても、買ったときの表情が続きます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ============ 7. 熱まわりの部品 ============ -->
+<section class="heat">
+  <div class="wrap">
+    <h2>どの部品にも、<br>選んだ理由があります。</h2>
+    <p class="lead">加熱式は、本体に熱がこもります。パイプの周りにある部品は、その熱を毎日受け続けます。だからSTENAは、ひとつずつ理由を確かめながら素材を決めました。</p>
+
+    <div class="parts">
+      <div class="part">
+        <span class="part-where">パッキン（蒸気の受け口）</span>
+        <h3>熱くなっても、においが移りません。</h3>
+        <p>200℃の熱に耐える、においの少ないシリコンを使っています。加熱式でも、蒸気にゴムのにおいが混ざりません。</p>
+        <span class="spec-d">KCC プラチナシリコン ／ 200℃耐熱</span>
+      </div>
+      <div class="part">
+        <span class="part-where">外装</span>
+        <h3>熱でも衝撃でも、形が変わりません。</h3>
+        <p>熱で歪まず、ぶつけても割れにくい樹脂です。加熱式でも本体が変形しないので、買ったときの質感が続きます。</p>
+        <span class="spec-d">LG ABS 409 ／ 高耐熱・高耐衝撃</span>
+      </div>
+      <p class="note" style="margin-top:18px">※ 各素材の数値は、メーカーの公表値に基づいています。</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 締め ============ -->
+<section class="closing">
+  <div class="wrap">
+    <p>洗うほどに、<br>きれいが戻ってくる。</p>
+    <p class="sub">清潔さを表面から足すのではなく、素材と、つくり方で保つ。<br>それが、STENAの考え方です。</p>
+  </div>
+</section>
+
+</body>
+</html>

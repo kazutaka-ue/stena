@@ -165,7 +165,7 @@ function auditExpression(viewport, scopedToIntro = false){
   return `(() => {
     const settings = ${JSON.stringify(settings)};
     const viewport = ${JSON.stringify(viewport)};
-    const rootSelector = ${JSON.stringify(scopedToIntro ? '#introHook,#methodIntro,#methodCompare' : '')};
+    const rootSelector = ${JSON.stringify(scopedToIntro ? '#introHook,#methodIntro,#methodIntroBalance,#methodCompare' : '')};
     const roots = rootSelector ? [...document.querySelectorAll(rootSelector)] : [document];
     const queryAll = selector => roots.flatMap(root => [...root.querySelectorAll(selector)]);
     const ignoredCopy = [

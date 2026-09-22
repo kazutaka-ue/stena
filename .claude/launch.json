@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "stena-lp",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["serve-debug.mjs"],
+      "port": 8766,
+      "autoPort": true
+    }
+  ]
+}

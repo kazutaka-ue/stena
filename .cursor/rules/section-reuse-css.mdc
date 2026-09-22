@@ -1,0 +1,6 @@
+---
+description: セクション再利用・CSS — 詳細は AGENTS.md
+alwaysApply: true
+---
+
+作業前にリポジトリルートの AGENTS.md「セクション実装方針」「デザインシステム」に必ず従う。

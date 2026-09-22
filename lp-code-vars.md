@@ -3,6 +3,7 @@
 `{# lp-code-* #}` の **名前・順序・巻く範囲**、および **`<title>` / meta description** の正本。  
 [`works.html`](works.html) の本番変換と [`/audit`](.cursor/commands/audit.md) の合否は、このファイルを参照する。
 
+- ソースの正本は [`preview.html`](preview.html)。`works.html` へ出すときは preview の本文構成を前提に、切れ目コメントとパス置換だけを行う（§12）
 - ここにない `{# lp-code-* #}` は **作らない**（必要なら提案のみ。採用はユーザー確認後）
 - タグを **追加・改名・削除** するときは、ユーザー承認のあと **本ファイルを先に直し**、そのあと [`works.html`](works.html) を直す
 - **`<title>` / description を変える** ときも同様。ユーザー承認 → **本ファイルを先** → `works.html` の同期箇所を直す（下記「同期箇所」）
@@ -17,7 +18,7 @@
 | 項目 | 値 |
 |------|-----|
 | `<title>` | STENA　5分で沸き立つ建築発想デザインの加熱式加湿器 |
-| meta `description` | 高品質ステンレス×高速5分加湿のスチーム式加湿器「STENA」。清潔設計・自動洗浄・静音・高い安全性で寝室からリビングまで快適に加湿。デザインにもこだわった、長く使える本格派。 |
+| meta `description` | 高品質ステンレス×高速5分加湿のスチーム式加湿器「STENA」。清潔設計・CLEANモード・ターボモード時約33dBで寝室からリビングまで快適に加湿。デザインにもこだわった、長く使える本格派。 |
 | `og:url` | https://stena.jp/ |
 | 購入CTA `href` | #chatform |
 
@@ -32,6 +33,24 @@
 | `og:description` | 正本の description と同じ |
 | JSON-LD Product `name` | 正本の `<title>` と同じ |
 | JSON-LD Product `description` | 正本の description と同じ |
+
+### 本番変換前：構造化データ立証チェック
+
+[`LLMO.md`](LLMO.md) の「構造化データの立証チェック」に従う。本番変換・`/audit` では **文言を勝手に変えない**。不一致は報告のみ。
+
+**チェック対象（`works.html` の head）**
+
+- `{# lp-code-head-og #}`（`og:description`）
+- `{# lp-code-head-product #}`（JSON-LD Product `description` / `additionalProperty`）
+- `{# lp-code-head-faq #}`（FAQPage `acceptedAnswer.text`）
+
+**手順**
+
+1. 正本の description からキーフレーズ（例：自動洗浄・静音・高い安全性）を列挙する。
+2. `works.html` の可視本文（`{# lp-code-fv #}` 以降、`{# lp-code-foot #}` 手前）で各語を grep し、同等以上の具体性・条件があるか確認する。
+3. FAQPage JSON-LD と `{# lp-code-qa #}` の Q&A を diff し、完全一致を確認する。
+4. 要注意語・字面不一致・条件の欠落があれば **警告リストとして報告**する（自動修正しない）。
+5. `/audit` では `<title>` / description の正本一致に加え、**立証警告が残る場合は「要確認」として報告**する。
 
 `{# lp-code-head-common #}` は `<title>` の直後（charset / viewport / format-detection / canonical / favicon）。`<title>` / `<head>` は巻かない。`<meta name="description">` は含めない。
 
@@ -54,7 +73,7 @@
 | 11 | `{# lp-code-intro #}` | 導入 |
 | 12 | `{# lp-code-product-design #}` | 製品：設計・清潔 |
 | 13 | `{# lp-code-product-doctor #}` | 製品：医師コメント |
-| 14 | `{# lp-code-product-speed #}` | 製品：速さ・モード・電気代 |
+| 14 | `{# lp-code-product-speed #}` | 製品：速さ・電気代・静音 |
 | 15 | `{# lp-code-product-look #}` | 製品：デザイン・実績 |
 | 16 | `{# lp-code-product-tank #}` | 製品：タンク |
 | 17 | `{# lp-code-product-closing #}` | 製品：紹介締め |
@@ -84,13 +103,13 @@ howto 以降は **1セクション1パート**。CTA は必ず `cta-` 接頭辞�
 | `{# lp-code-cta-offer #}` | `.offer` |
 | `{# lp-code-cta-purchase #}` | `.purchase` |
 | `{# lp-code-voice #}` | `.voice` |
-| `{# lp-code-intro #}` | `.intro-hook` / `.method-intro` / `.method-compare` |
-| `{# lp-code-product-design #}` | `.steam-answer` から `.humid-diff` まで（間のメリット／メンテカード含む） |
-| `{# lp-code-product-doctor #}` | `.doctor-comment` |
-| `{# lp-code-product-speed #}` | `.steam-beyond` / `.steam-modes` / `.steam-cost` |
-| `{# lp-code-product-look #}` | `.steam-design` / `.proof` |
-| `{# lp-code-product-tank #}` | `.tank-*` |
-| `{# lp-code-product-closing #}` | `.story-closing` |
+| `{# lp-code-intro #}` | `#introHook`（`.intro-hook.intro3-chapter`）から `#methodCompare`（`.method-compare.intro3-chapter`）まで。間の `.p4-chapter`（`#humidBelief` / `#throatDryness` / `#p4ColdAir`）を含む。旧 `.method-intro` は含めない |
+| `{# lp-code-product-design #}` | `#steamAnswer` から `#steamFilterless` まで（清潔・フィルターレス。旧 `.humid-diff` 単独セクションは無し） |
+| `{# lp-code-product-doctor #}` | `.doctor-comment`（`#doctorComment`） |
+| `{# lp-code-product-speed #}` | `#steamBeyond` / `#steamCost` / `#steamQuiet`（速さ・電気代・静音。`.steam-modes` はタンク物語側） |
+| `{# lp-code-product-look #}` | `#steamDesign` / `#proof` |
+| `{# lp-code-product-tank #}` | `#nextLevel`（`.tank-hero`）から `#tankCompare` まで（間の `#steamPath` / `#tankSafety` / `#steamDaily` / `#steamModes` / `#steamCare` を含む） |
+| `{# lp-code-product-closing #}` | `.story-closing`（`#storyClosing`） |
 | `{# lp-code-howto #}` | `.howto` |
 | `{# lp-code-dry-stress #}` | `.dry-stress` |
 | `{# lp-code-recommend #}` | `.recommend` |
@@ -148,7 +167,7 @@ CSS / CDN
 導入
 製品：設計・清潔
 製品：医師コメント
-製品：速さ・モード・電気代
+製品：速さ・電気代・静音
 製品：デザイン・実績
 製品：タンク
 製品：紹介締め

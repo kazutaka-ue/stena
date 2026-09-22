@@ -1,0 +1,10 @@
+---
+description: 進行中作業（preview2 #tankCompare）— 詳細は AGENTS.md §1
+alwaysApply: true
+---
+
+作業前にリポジトリルートの AGENTS.md「現在の作業状態（別 Cursor への引き継ぎ）」を読むこと。
+
+- 進行中の本線は `preview2.html`（`#tankSteel` 316Ti／`#tankCompare` 章頭／`#tankCross` 断面／`#tankWash` 洗浄／`#tankCraft` クラフト）。
+- 本番相当・EC変換ソースは `preview.html`。依頼なく preview2 の変更を本番へ混ぜない。
+- 監査例: `node layout-audit.mjs --page=preview2.html --capture=tankSteel,tankCompare,tankCross,tankWash,tankCraft`

@@ -1,0 +1,29 @@
+# このPC固有・個人設定（他環境に渡すときは含めない）
+.claude/settings.local.json
+
+# ブラウザデバッグ用の一時プロファイル・キャッシュ
+.edge-cdp/
+.edge-cdp-introhook/
+_trash-*/
+.tmp-*/
+
+# 一時 HTML・ワンショット補助スクリプト
+.tmp-*.html
+_*.mjs
+tmp-*.mjs
+
+# エディタ・デバッグログ
+.cursor/*.log
+.cursor/debug-*.log
+*.log
+
+# OS ジャンク
+.DS_Store
+Thumbs.db
+
+# 依存パッケージ（現状スクリプトはNode標準モジュールのみで未使用だが念のため）
+node_modules/
+
+# スクラッチ・一時出力
+scratch_*
+_rm-test.html

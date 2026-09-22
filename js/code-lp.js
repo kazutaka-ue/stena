@@ -1,105 +1,77 @@
-/* code-lp.js - STENA LP behaviors (extracted from preview.html) */
+/* code-lp.js - STENA LP behaviors */
 
-document.addEventListener('DOMContentLoaded', function() {
-  const fixCta = document.getElementById('fixCta');
-  if(!fixCta) return;
-
-  const introEnd = document.body.classList.contains('preview2')
-    ? document.getElementById('methodCompare')
-    : null;
-  const showStartPosition = () => introEnd
-    ? introEnd.getBoundingClientRect().bottom + window.scrollY
-    : 1800;
-  let isVisible = false;
-  let hideTimer = null;
-
-  function showFixCta() {
-    if(isVisible) return;
-    clearTimeout(hideTimer);
-
-    fixCta.style.display = 'block';
-    fixCta.style.opacity = '0';
-    fixCta.offsetHeight;
-
-    fixCta.style.opacity = '1';
-    isVisible = true;
-  }
-
-  function hideFixCta() {
-    if(!isVisible && fixCta.style.display === 'none') return;
-    clearTimeout(hideTimer);
-
-    fixCta.style.opacity = '0';
-    isVisible = false;
-
-    hideTimer = setTimeout(() => {
-      if(!isVisible){
-        fixCta.style.display = 'none';
-      }
-    }, 500);
-  }
-
-  function handleScroll() {
-    const documentHeight = document.documentElement.scrollHeight;
-    const windowHeight = window.innerHeight;
-    const scrollTop = window.scrollY;
-    const isNearBottom = scrollTop + windowHeight >= documentHeight - 100;
-
-    if(scrollTop < showStartPosition() || isNearBottom){
-      hideFixCta();
-    } else {
-      showFixCta();
-    }
-  }
-
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll();
-});
-
-/* セクション共通ユーティリティ（リビール・スクロール） */
 window.LP = (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp = (v, a = 0, b = 1) => Math.min(Math.max(v, a), b);
 
+  /* iOS Safari 向け：可視性／スクロール fallback を1本の poll に集約 */
+  const scrollPoll = (() => {
+    const subscribers = new Set();
+    let intervalId = 0;
+    const POLL_MS = 200;
+
+    function subscribe(fn){
+      subscribers.add(fn);
+      if(!intervalId){
+        intervalId = setInterval(() => {
+          subscribers.forEach((cb) => cb());
+        }, POLL_MS);
+      }
+      return () => {
+        subscribers.delete(fn);
+        if(!subscribers.size && intervalId){
+          clearInterval(intervalId);
+          intervalId = 0;
+        }
+      };
+    }
+
+    return { subscribe };
+  })();
+
   function bindScroll(fn){
     let last = 0;
-    function onScroll(source){
-      // iOS Safari はスクロール中に rAF を遅延するため、同期実行する
+    function run(){
       const now = performance.now();
-      if(source !== 'poll' && now - last < 8) return;
-      if(source === 'poll' && now - last < 50) return;
+      if(now - last < 8) return;
       last = now;
       fn();
     }
-    window.addEventListener('scroll', () => onScroll('scroll'), { passive: true });
-    window.addEventListener('touchmove', () => onScroll('touchmove'), { passive: true });
-    window.addEventListener('resize', () => onScroll('resize'), { passive: true });
+    window.addEventListener('scroll', run, { passive: true });
+    window.addEventListener('touchmove', run, { passive: true });
+    window.addEventListener('resize', run, { passive: true });
     if(window.visualViewport){
-      window.visualViewport.addEventListener('scroll', () => onScroll('vv-scroll'), { passive: true });
-      window.visualViewport.addEventListener('resize', () => onScroll('vv-resize'), { passive: true });
+      window.visualViewport.addEventListener('scroll', run, { passive: true });
+      window.visualViewport.addEventListener('resize', run, { passive: true });
     }
-    setInterval(() => onScroll('poll'), 100);
-    onScroll('init');
+    const unsubPoll = scrollPoll.subscribe(run);
+    run();
+    return unsubPoll;
   }
 
-  /* 画面内入場検知。IO + scroll/touch/poll（スマホの取りこぼし対策） */
+  function inViewRect(el, options = {}){
+    const r = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const inset = 40;
+    if(r.bottom <= inset || r.top >= vh - inset) return false;
+    const minRatio = typeof options.threshold === 'number' ? options.threshold : 0;
+    if(minRatio <= 0) return true;
+    const visible = Math.min(r.bottom, vh - inset) - Math.max(r.top, inset);
+    return visible > 0 && visible / Math.max(r.height, 1) >= minRatio;
+  }
+
   function whenVisible(el, onEnter, options = {}){
     if(!el || typeof onEnter !== 'function') return () => {};
 
     const rootMargin = options.rootMargin || '0px 0px -12% 0px';
     const once = options.once !== false;
     const onLeave = typeof options.onLeave === 'function' ? options.onLeave : null;
+    const threshold = typeof options.threshold === 'number' ? options.threshold : 0;
     let alive = true;
     let wasIn = false;
     let enteredOnce = false;
     let io = null;
-    let pollId = 0;
-
-    const inViewRect = () => {
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      return r.bottom > 40 && r.top < vh - 40;
-    };
+    let unsubPoll = null;
 
     const teardown = () => {
       if(!alive) return;
@@ -108,8 +80,8 @@ window.LP = (() => {
       io = null;
       window.removeEventListener('scroll', onScrollFallback);
       window.removeEventListener('touchmove', onScrollFallback);
-      if(pollId) clearInterval(pollId);
-      pollId = 0;
+      if(unsubPoll) unsubPoll();
+      unsubPoll = null;
     };
 
     const setIn = (hit) => {
@@ -131,22 +103,26 @@ window.LP = (() => {
 
     const onScrollFallback = () => {
       if(!alive) return;
-      setIn(inViewRect());
+      setIn(inViewRect(el, { threshold }));
     };
 
     if('IntersectionObserver' in window){
       io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if(entry.target !== el) return;
+          if(threshold > 0){
+            setIn(entry.isIntersecting && entry.intersectionRatio >= threshold);
+            return;
+          }
           setIn(entry.isIntersecting);
         });
-      }, { threshold: 0, rootMargin });
+      }, { threshold: threshold > 0 ? [0, threshold] : 0, rootMargin });
       io.observe(el);
     }
 
     window.addEventListener('scroll', onScrollFallback, { passive: true });
     window.addEventListener('touchmove', onScrollFallback, { passive: true });
-    pollId = setInterval(onScrollFallback, 200);
+    unsubPoll = scrollPoll.subscribe(onScrollFallback);
     onScrollFallback();
 
     return teardown;
@@ -155,7 +131,6 @@ window.LP = (() => {
   function initRevealInView(selector, options = {}){
     const els = [...document.querySelectorAll(selector)];
     if(!els.length) return;
-    /* reduceMotion でも fadeInUp は実行する */
 
     const pending = new Set(els);
     const show = (el) => {
@@ -165,13 +140,6 @@ window.LP = (() => {
       setTimeout(() => el.classList.add('is-shown'), delay);
     };
 
-    const inView = (el) => {
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      return r.bottom > 40 && r.top < vh - 40;
-    };
-
-    /* WebKit: opacity:0 要素の IO が欠落するため、不透明な親を監視 */
     const groups = new Map();
     els.forEach(el => {
       const root = el.closest('section') || el.parentElement;
@@ -194,31 +162,26 @@ window.LP = (() => {
     const onScrollFallback = () => {
       if(!pending.size) return;
       pending.forEach(el => {
-        if(!inView(el)) return;
+        if(!inViewRect(el)) return;
         show(el);
       });
     };
     window.addEventListener('scroll', onScrollFallback, { passive: true });
     window.addEventListener('touchmove', onScrollFallback, { passive: true });
-    const pollId = setInterval(() => {
+    const unsubPoll = scrollPoll.subscribe(() => {
       if(!pending.size){
-        clearInterval(pollId);
+        unsubPoll();
         return;
       }
       onScrollFallback();
-    }, 200);
+    });
     onScrollFallback();
   }
 
-  initRevealInView('.reveal');
-
-  /* 画像拡大モーダル：data-lp-modal-src を付けた要素から呼び出し可 */
-  (() => {
+  function initLpModal(){
     const dialog = document.getElementById('lpModal');
     const img = document.getElementById('lpModalImg');
-    if(!dialog || !img || typeof dialog.showModal !== 'function'){
-      return;
-    }
+    if(!dialog || !img || typeof dialog.showModal !== 'function') return;
 
     let lastFocus = null;
 
@@ -270,206 +233,292 @@ window.LP = (() => {
         alt: trigger.getAttribute('data-lp-modal-alt') || (nested && nested.alt) || ''
       });
     });
-  })();
+  }
 
-  return { reduceMotion, clamp, bindScroll, whenVisible };
-})();
-if (window.__lpJsWatchdog) clearTimeout(window.__lpJsWatchdog);
+  function initFixCta(){
+    const fixCta = document.getElementById('fixCta');
+    if(!fixCta) return;
 
-(() => {
-  if(!window.LP || !window.LP.whenVisible) return;
+    const FALLBACK_START = 1800;
+    let anchor = null;
+    let isVisible = false;
+    let hideTimer = null;
 
-  document.querySelectorAll('#steamBeyondVideo, #steamModesVideo, #storyClosingVideo').forEach((video) => {
-    const host = video.closest('.steam-beyond__video, .steam-modes__video, .story-closing__video') || video;
-    let shouldPlay = false;
-
-    const tryPlay = () => {
-      if(!shouldPlay) return;
-      const go = () => {
-        if(!shouldPlay) return;
-        const p = video.play();
-        if(p && p.catch) p.catch(() => {});
-      };
-      if(video.readyState >= 2) go();
-      else video.addEventListener('loadeddata', go, { once: true });
-    };
-
-    /* 比較・モード動画はコンテンツのため、iOS「視覚効果を減らす」でも再生する */
-    if(window.LP.reduceMotion){
-      video.removeAttribute('autoplay');
+    function resolveAnchor(){
+      const selector = document.body.dataset.fixCtaAfter;
+      anchor = selector ? document.querySelector(selector) : null;
     }
 
-    window.LP.whenVisible(host, () => {
-      shouldPlay = true;
-      tryPlay();
-    }, {
-      once: false,
-      onLeave(){
-        shouldPlay = false;
-        video.pause();
+    function showStartPosition(){
+      return anchor
+        ? anchor.getBoundingClientRect().bottom + window.scrollY
+        : FALLBACK_START;
+    }
+
+    function showFixCta(){
+      if(isVisible) return;
+      clearTimeout(hideTimer);
+
+      fixCta.style.display = 'block';
+      fixCta.style.opacity = '0';
+      fixCta.offsetHeight;
+
+      fixCta.style.opacity = '1';
+      isVisible = true;
+    }
+
+    function hideFixCta(){
+      if(!isVisible && fixCta.style.display === 'none') return;
+      clearTimeout(hideTimer);
+
+      fixCta.style.opacity = '0';
+      isVisible = false;
+
+      hideTimer = setTimeout(() => {
+        if(!isVisible){
+          fixCta.style.display = 'none';
+        }
+      }, 500);
+    }
+
+    function handleScroll(){
+      const documentHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+      const scrollTop = window.scrollY;
+      const isNearBottom = scrollTop + windowHeight >= documentHeight - 100;
+
+      if(scrollTop < showStartPosition() || isNearBottom){
+        hideFixCta();
+      } else {
+        showFixCta();
+      }
+    }
+
+    resolveAnchor();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      resolveAnchor();
+      handleScroll();
+    }, { passive: true });
+    window.addEventListener('orientationchange', () => {
+      resolveAnchor();
+      handleScroll();
+    }, { passive: true });
+    handleScroll();
+  }
+
+  const resumeVideos = new Set();
+
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden) return;
+    resumeVideos.forEach((tryPlay) => tryPlay());
+  });
+
+  function initSectionVideos(){
+    document.querySelectorAll('#steamBeyondVideo, #steamModesVideo, #storyClosingVideo').forEach((video) => {
+      const host = video.closest('.steam-beyond__video, .steam-modes__video, .story-closing__video') || video;
+      let shouldPlay = false;
+
+      const tryPlay = () => {
+        if(!shouldPlay) return;
+        const go = () => {
+          if(!shouldPlay) return;
+          const p = video.play();
+          if(p && p.catch) p.catch(() => {});
+        };
+        if(video.readyState >= 2) go();
+        else video.addEventListener('loadeddata', go, { once: true });
+      };
+
+      if(reduceMotion){
+        video.removeAttribute('autoplay');
+      }
+
+      whenVisible(host, () => {
+        shouldPlay = true;
+        tryPlay();
+      }, {
+        once: false,
+        onLeave(){
+          shouldPlay = false;
+          video.pause();
+        }
+      });
+
+      resumeVideos.add(tryPlay);
+    });
+  }
+
+  function initIntroHookVideo(){
+    const videos = document.querySelectorAll('#introHook .intro3-bg');
+    if(!videos.length) return;
+
+    const mq = window.matchMedia('(max-width:760px)');
+
+    videos.forEach((video) => {
+      const srcSp = video.dataset.srcSp;
+      const srcPc = video.dataset.srcPc || video.getAttribute('src');
+      if(!srcSp || !srcPc) return;
+
+      const pickSrc = () => (mq.matches ? srcSp : srcPc);
+
+      const applySrc = () => {
+        const next = pickSrc();
+        if(video.getAttribute('src') === next) return;
+        video.setAttribute('src', next);
+        video.load();
+        const play = video.play();
+        if(play && play.catch) play.catch(() => {});
+      };
+
+      applySrc();
+      if(mq.addEventListener) mq.addEventListener('change', applySrc);
+      else mq.addListener(applySrc);
+    });
+  }
+
+  function initSteamCostCounter(){
+    const figure = document.querySelector('#steamCost .steam-cost__figure');
+    const num = figure && figure.querySelector('.steam-cost__num');
+    if(!figure || !num) return;
+
+    const target = parseInt(num.getAttribute('data-to'), 10);
+    if(!Number.isFinite(target)) return;
+
+    if(reduceMotion){
+      num.textContent = String(target);
+      return;
+    }
+
+    const DUR = 900;
+    let started = false;
+
+    function animate(){
+      if(started) return;
+      started = true;
+      num.textContent = '0';
+      const t0 = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / DUR);
+        const eased = 1 - Math.pow(1 - p, 3);
+        num.textContent = String(Math.round(target * eased));
+        if(p < 1) requestAnimationFrame(tick);
+        else num.textContent = String(target);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    whenVisible(figure, animate);
+  }
+
+  function initTankHeroVideo(){
+    document.querySelectorAll('.tank-hero__visual').forEach((video) => {
+      whenVisible(video, () => {
+        video.currentTime = 0;
+        const p = video.play();
+        if(p && p.catch) p.catch(() => {});
+      }, {
+        once: true,
+        threshold: 0.35,
+        rootMargin: '0px 0px -8% 0px'
+      });
+    });
+  }
+
+  function initSteamAnswerParallax(){
+    const sec = document.getElementById('steamAnswer');
+    const bg  = sec && sec.querySelector('.steam-answer__bg');
+    if(!sec || !bg) return;
+
+    if(reduceMotion){
+      bg.style.opacity = '1';
+      bg.style.transform = 'translateX(-50%)';
+      return;
+    }
+
+    bindScroll(() => {
+      const vh = window.innerHeight;
+      const r  = sec.getBoundingClientRect();
+      const p  = clamp((vh - r.top) / (vh * 0.7));
+      bg.style.opacity   = p.toFixed(3);
+      bg.style.transform = 'translateX(-50%) scale(' + (1.06 - 0.06 * p).toFixed(4) + ')';
+    });
+  }
+
+  function initSteamDesignSwiper(){
+    const el = document.getElementById('steamDesignSwiper');
+    const root = document.querySelector('#steamDesign .steam-design__slider');
+    if(!el || !root || typeof Swiper === 'undefined') return;
+
+    const prevEl = root.querySelector('.steam-design__nav--prev');
+    const nextEl = root.querySelector('.steam-design__nav--next');
+    const paginationEl = root.querySelector('.steam-design__pagination');
+    const imgs = [...el.querySelectorAll('img')];
+
+    const swiper = new Swiper(el, {
+      rewind: true,
+      initialSlide: 1,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      spaceBetween: 40,
+      speed: 1000,
+      watchSlidesProgress: true,
+      autoplay: reduceMotion ? false : {
+        delay: 4000,
+        disableOnInteraction: false
+      },
+      navigation: {
+        prevEl,
+        nextEl
+      },
+      pagination: {
+        el: paginationEl,
+        clickable: true
       }
     });
 
-    document.addEventListener('visibilitychange', () => {
-      if(document.hidden || !shouldPlay) return;
-      tryPlay();
-    });
-  });
-})();
-
-(() => {
-  const figure = document.querySelector('#steamCost .steam-cost__figure');
-  const num = figure && figure.querySelector('.steam-cost__num');
-  if(!figure || !num) return;
-
-  const target = parseInt(num.getAttribute('data-to'), 10);
-  if(!Number.isFinite(target)) return;
-
-  const reduceMotion = window.LP && window.LP.reduceMotion;
-  if(reduceMotion){
-    num.textContent = String(target);
-    return;
-  }
-
-  const DUR = 900;
-  let started = false;
-
-  function animate(){
-    if(started) return;
-    started = true;
-    num.textContent = '0';
-    const t0 = performance.now();
-    const tick = (now) => {
-      const p = Math.min(1, (now - t0) / DUR);
-      const eased = 1 - Math.pow(1 - p, 3);
-      num.textContent = String(Math.round(target * eased));
-      if(p < 1) requestAnimationFrame(tick);
-      else num.textContent = String(target);
-    };
-    requestAnimationFrame(tick);
-  }
-
-  if(window.LP && window.LP.whenVisible){
-    window.LP.whenVisible(figure, animate);
-  } else {
-    animate();
-  }
-})();
-
-(() => {
-  const video = document.getElementById('tankHeroVisual');
-  if(!video) return;
-
-  let played = false;
-
-  function playOnce(){
-    if(played) return;
-    played = true;
-    video.currentTime = 0;
-    const p = video.play();
-    if(p && p.catch) p.catch(() => {});
-  }
-
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(!entry.isIntersecting || played) return;
-      playOnce();
-      io.unobserve(video);
-    });
-  }, {
-    threshold: 0.35,
-    rootMargin: '0px 0px -8% 0px'
-  });
-
-  io.observe(video);
-
-  /* 初回表示時すでに画面内なら即再生 */
-  const r = video.getBoundingClientRect();
-  const vh = window.innerHeight || document.documentElement.clientHeight;
-  if(r.top < vh * 0.75 && r.bottom > vh * 0.15){
-    playOnce();
-    io.unobserve(video);
-  }
-})();
-
-/* ④ 製品画像のスクロール連動リビール */
-(() => {
-  const sec = document.getElementById('steamAnswer');
-  const bg  = sec && sec.querySelector('.steam-answer__bg');
-  if(!sec || !bg) return;
-
-  const { clamp, bindScroll, reduceMotion } = window.LP;
-
-  if(reduceMotion){
-    bg.style.opacity = '1';
-    bg.style.transform = 'translateX(-50%)';
-    return;
-  }
-
-  bindScroll(() => {
-    const vh = window.innerHeight;
-    const r  = sec.getBoundingClientRect();
-    /* セクション上端が画面下端に触れてから、画面高の70%進むまでを 0→1 */
-    const p  = clamp((vh - r.top) / (vh * 0.7));
-    bg.style.opacity   = p.toFixed(3);
-    /* 既存CSSの translateX(-50%) を必ず維持すること（消すと中央寄せが崩れる） */
-    bg.style.transform = 'translateX(-50%) scale(' + (1.06 - 0.06 * p).toFixed(4) + ')';
-  });
-})();
-
-(() => {
-  const el = document.getElementById('steamDesignSwiper');
-  const root = document.querySelector('#steamDesign .steam-design__slider');
-  if(!el || !root || typeof Swiper === 'undefined') return;
-
-  const reduceMotion = window.LP && window.LP.reduceMotion;
-  const prevEl = root.querySelector('.steam-design__nav--prev');
-  const nextEl = root.querySelector('.steam-design__nav--next');
-  const paginationEl = root.querySelector('.steam-design__pagination');
-  const imgs = [...el.querySelectorAll('img')];
-
-  const swiper = new Swiper(el, {
-    rewind: true,
-    initialSlide: 1,
-    centeredSlides: true,
-    slidesPerView: 'auto',
-    spaceBetween: 40,
-    speed: 1000,
-    watchSlidesProgress: true,
-    autoplay: reduceMotion ? false : {
-      delay: 4000,
-      disableOnInteraction: false
-    },
-    navigation: {
-      prevEl,
-      nextEl
-    },
-    pagination: {
-      el: paginationEl,
-      clickable: true
+    function refresh(){
+      swiper.update();
     }
-  });
 
-  function refresh(){
-    swiper.update();
-  }
-
-  let pending = imgs.filter((img) => !img.complete).length;
-  if(!pending){
-    requestAnimationFrame(refresh);
-  } else {
-    const done = () => {
-      pending -= 1;
-      if(pending > 0) return;
+    let pending = imgs.filter((img) => !img.complete).length;
+    if(!pending){
       requestAnimationFrame(refresh);
-    };
-    imgs.forEach((img) => {
-      if(img.complete) return;
-      img.addEventListener('load', done, { once: true });
-      img.addEventListener('error', done, { once: true });
-    });
+    } else {
+      const done = () => {
+        pending -= 1;
+        if(pending > 0) return;
+        requestAnimationFrame(refresh);
+      };
+      imgs.forEach((img) => {
+        if(img.complete) return;
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+      });
+    }
+
+    window.addEventListener('load', () => requestAnimationFrame(refresh), { once: true });
   }
 
-  window.addEventListener('load', () => requestAnimationFrame(refresh), { once: true });
+  function init(){
+    initRevealInView('.reveal');
+    initLpModal();
+    initFixCta();
+    initSectionVideos();
+    initIntroHookVideo();
+    initSteamCostCounter();
+    initTankHeroVideo();
+    initSteamAnswerParallax();
+    initSteamDesignSwiper();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  return { reduceMotion };
 })();
 
+if(window.__lpJsWatchdog) clearTimeout(window.__lpJsWatchdog);
