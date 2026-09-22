@@ -118,7 +118,7 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 - 導入のタイポ／シーンは **`.intro3-*` / `.p4-*`**（`body.preview3.preview4`）。明帯の旧 `.intro-hook__ask` 構成には戻さない。
 - **導入部にピン留め（sticky scrub）は置かない。** 導入セクションも原則 `min-height:100svh` / `height:*svh` で嵩上げしない（コンテンツ駆動）。**例外は `#introHook` 動画ヒーローのみ**（PC `60svh`。他章へ広げない）。
 - `img/winter_morning.jpg` は `preview3.html` の `#introHook` 背景に限り使用可。マスク・咳を想起させる写真のため、改善・予防など身体効果の断定とは組み合わせない。
-- 製品モード（黒帯）は `.steam-answer` から始める。p4 中間は `#334c6a` の intro 拡張トーン。
+- 製品モード（黒帯）は `.steam-answer` から始める。p4 中間は `#223b59`（`--bg-intro`）の intro 拡張トーン。
 - `steam-beyond`: 章主題は h2、「約6倍速く」は **h3**。
 - メリット／メンテ: 独立 `section` + 各自 h2。`.lp-carousel` / `.lp-card`（SP縦／PC横）。
 - `dry-stress__close` / `steam-design__feature-text` / `lp-close__end`: 見た目の締めは **見出しタグ**。
@@ -133,7 +133,7 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 
 | トークン | 用途 |
 |----------|------|
-| `--bg` / `--bg-dark` / `--bg-slate` / `--bg-cool` | 白／黒／中間スレート（`#121c28`）／クール面 |
+| `--bg` / `--bg-dark` / `--bg-slate` / `--bg-intro` / `--bg-cool` | 白／黒／中間スレート（`#1c2b3c`）／導入帯（`#223b59`）／クール面 |
 | `--ink` / `--ink-muted` | 明帯テキスト |
 | `--ink-cool` / `--ink-cool-muted` | クール帯テキスト |
 | `--ink-on-dark` / `--muted-on-dark` | 暗帯テキスト |

@@ -425,26 +425,6 @@ window.LP = (() => {
     });
   }
 
-  function initSteamAnswerParallax(){
-    const sec = document.getElementById('steamAnswer');
-    const bg  = sec && sec.querySelector('.steam-answer__bg');
-    if(!sec || !bg) return;
-
-    if(reduceMotion){
-      bg.style.opacity = '1';
-      bg.style.transform = 'translateX(-50%)';
-      return;
-    }
-
-    bindScroll(() => {
-      const vh = window.innerHeight;
-      const r  = sec.getBoundingClientRect();
-      const p  = clamp((vh - r.top) / (vh * 0.7));
-      bg.style.opacity   = p.toFixed(3);
-      bg.style.transform = 'translateX(-50%) scale(' + (1.06 - 0.06 * p).toFixed(4) + ')';
-    });
-  }
-
   function initSteamDesignSwiper(){
     const el = document.getElementById('steamDesignSwiper');
     const root = document.querySelector('#steamDesign .steam-design__slider');
@@ -508,7 +488,6 @@ window.LP = (() => {
     initIntroHookVideo();
     initSteamCostCounter();
     initTankHeroVideo();
-    initSteamAnswerParallax();
     initSteamDesignSwiper();
   }
 

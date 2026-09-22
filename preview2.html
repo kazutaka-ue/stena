@@ -137,7 +137,7 @@ window.__lpJsWatchdog = setTimeout(function(){
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <link rel="stylesheet" href="css/lp-code.css">
 </head>
-<body class="preview2">
+<body class="preview2 preview3 preview4" data-fix-cta-after="#methodCompare">
 
   <section class="fv" aria-labelledby="fvTitle">
     <h1 id="fvTitle" class="fv__title">STENA 次世代型スチーム加湿器</h1>
@@ -292,135 +292,112 @@ window.__lpJsWatchdog = setTimeout(function(){
     </div>
   </section>
 
-  <section class="intro-hook" id="introHook" aria-labelledby="introHookTitle">
-    <div class="lp-inner intro-hook__inner">
-      <div class="intro-hook__flow lp-story-panel" data-layout-panel>
-        <p class="intro-hook__ask reveal reveal--up" data-type-role="lead">冬になると、そんな朝が増えませんか？</p>
-        <h2 id="introHookTitle" class="intro-hook__title reveal reveal--up" data-reveal-delay="80" data-type-role="main">
-          <span>朝起きると、</span>
-          喉が<em>カラカラ。</em>
-        </h2>
-        <p class="intro-hook__lead reveal reveal--up" data-reveal-delay="160" data-type-role="support">目覚めとともに感じる、喉の不快感。</p>
-        <div class="intro-hook__question reveal reveal--up" data-reveal-delay="240">
-          <p data-type-role="observation">私たちが冬の寝室について考えたとき、気になったのが、</p>
-          <h3 data-type-role="close">湿度だけで、本当に十分なのか？</h3>
-          <p data-type-role="support">ということでした。</p>
+  <section class="intro-hook intro3-chapter" id="introHook" aria-labelledby="introHookTitle">
+    <div class="intro3-inner">
+      <article class="intro3-scene lp-story-panel" data-layout-panel>
+        <video class="intro3-bg" autoplay muted loop playsinline preload="auto" aria-hidden="true" data-src-sp="img/winterbg_sp.mp4" data-src-pc="img/winterbg.mp4"></video>
+        <script>
+          (function(){
+            var v = document.currentScript.previousElementSibling;
+            if(!v || !v.classList.contains('intro3-bg')) return;
+            v.src = window.matchMedia('(max-width:760px)').matches ? v.dataset.srcSp : v.dataset.srcPc;
+          })();
+        </script>
+        <div class="intro3-copy">
+          <p class="intro3-sub reveal reveal--up" data-type-role="lead">STENAの出発点</p>
+          <h2 id="introHookTitle" class="intro3-title reveal reveal--up" data-type-role="main">朝起きると、喉がカラカラ。<br><span class="intro3-title__line">冬になると、<br>そんな朝が増えませんか？</span></h2>
+          <p class="intro3-lead reveal reveal--up" data-reveal-delay="80" data-type-role="support">私たちが冬の寝室について考えたとき、気になったのが、<br>湿度だけで、本当に十分なのか？ということでした。</p>
         </div>
-      </div>
+      </article>
     </div>
   </section>
 
-  <section class="method-intro" id="methodIntro" aria-labelledby="methodIntroTitle">
-    <div class="lp-inner method-intro__inner">
-      <div class="method-intro__logic lp-story-panel" data-layout-panel>
-        <div class="method-intro__belief reveal reveal--up">
-          <h2 id="methodIntroTitle" class="method-intro__title" data-type-role="main">喉にいい湿度は<strong>50％前後</strong>。</h2>
-          <p data-type-role="support">そう聞くことが多いと思います。</p>
+  <section class="intro3-chapter p4-chapter" id="humidBelief" aria-labelledby="humidBeliefTitle">
+    <div class="intro3-inner">
+      <article class="p4-scene lp-story-panel" data-layout-panel>
+        <div class="intro3-copy">
+          <h2 id="humidBeliefTitle" class="intro3-title reveal reveal--up" data-type-role="main">喉にいい湿度は50%前後。</h2>
+          <p class="p4-body reveal reveal--up" data-reveal-delay="80" data-type-role="lead">そう聞くことが多いと思います。</p>
         </div>
-        <div class="method-intro__gap-detail" data-type-role="evidence">
-          <div class="humidity-compare reveal reveal--up" data-reveal-delay="120">
-            <div class="humidity-compare__item">
-              <p class="humidity-compare__temp"><span>ROOM</span>室温 12℃</p>
-              <p class="humidity-compare__place">湿度計が示す値</p>
-              <p class="humidity-compare__caption">部屋の空気の水分量</p>
-              <span class="humidity-compare__icon" aria-hidden="true">
-                <svg viewBox="0 0 80 80" focusable="false">
-                  <rect x="12" y="10" width="56" height="60" rx="12"></rect>
-                  <path d="M25 24h30"></path>
-                  <path d="M40 35c-6 8-10 13-10 19a10 10 0 0 0 20 0c0-6-4-11-10-19Z"></path>
-                  <path d="M40 47v8"></path>
+        <div class="humid-belief__compare-wrap reveal reveal--up" data-reveal-delay="200" data-type-role="evidence">
+          <p class="p4-figure__title" data-type-role="close">その50%、喉には届いていない。</p>
+          <div class="humid-belief__compare">
+            <article class="humid-belief__card">
+              <span class="humid-belief__ico" aria-hidden="true">
+                <svg viewBox="0 0 48 48" focusable="false">
+                  <path d="M24 6v36M10.4 13l27.2 22M10.4 35l27.2-22"></path>
                 </svg>
               </span>
-              <p class="humidity-compare__number">50<small>％</small></p>
-            </div>
-            <span class="humidity-compare__arrow" aria-hidden="true"></span>
-            <div class="humidity-compare__item humidity-compare__item--body">
-              <p class="humidity-compare__temp"><span>BODY</span>体温 37℃</p>
-              <p class="humidity-compare__place">体内での実質湿度</p>
-              <p class="humidity-compare__caption">体温で温まった空気の湿度</p>
-              <span class="humidity-compare__icon humidity-compare__icon--body" aria-hidden="true">
-                <svg viewBox="0 0 80 80" focusable="false">
-                  <circle cx="40" cy="23" r="11"></circle>
-                  <path d="M21 68v-8c0-13 8-22 19-22s19 9 19 22v8"></path>
-                  <path d="M29 45v23M51 45v23"></path>
+              <p class="humid-belief__temp">室温 12℃</p>
+              <p class="humid-belief__number">50%</p>
+              <p class="humid-belief__label">湿度計が見ている空気</p>
+            </article>
+            <span class="humid-belief__arrow" aria-hidden="true"></span>
+            <article class="humid-belief__card humid-belief__card--body">
+              <span class="humid-belief__ico humid-belief__ico--body" aria-hidden="true">
+                <svg viewBox="0 0 48 48" focusable="false">
+                  <circle cx="24" cy="14" r="7"></circle>
+                  <path d="M12 40v-5c0-8 5-13 12-13s12 5 12 13v5"></path>
                 </svg>
               </span>
-              <p class="humidity-compare__number">12<small>％※</small></p>
-            </div>
+              <p class="humid-belief__temp">体内 37℃</p>
+              <p class="humid-belief__number">12%</p>
+              <p class="humid-belief__label">喉が受け取る空気</p>
+            </article>
           </div>
-
-          <div class="method-intro__evidence reveal reveal--up" data-reveal-delay="200">
-            <h3>湿度が50％ → 12％ になる仕組み</h3>
-            <p>空気は温まるほど、より多くの水分を含めるようになります。だから、水分量が同じままだと、温めた分だけ<strong>相対湿度が下がる</strong>。室温12℃・湿度50％の空気が体内で37℃まで温まると、湿度は約<strong>12％</strong>まで下がります。</p>
-            <small>※ 室温12℃・相対湿度50％の空気を、水分量を変えず37℃まで加温した場合の相対湿度の概算値。</small>
-          </div>
+          <p class="p4-body humid-belief__after reveal reveal--up" data-reveal-delay="280" data-type-role="support">室温12℃・湿度50%の空気は、体内で37℃まで温まると湿度は約12%。※<br>つまり、湿度計では「50%」でも、<strong>体にとってはカラカラの空気です。</strong></p>
+          <p class="p4-note">※室温12℃・相対湿度50%の空気を、水分量を変えずに37℃まで加温した場合の相対湿度の概算値です。実際に吸い込んだ空気は、鼻や喉の粘膜から水分を受け取りながら体内に入ります。</p>
         </div>
-      </div>
+      </article>
+    </div>
+  </section>
 
-      <div class="method-intro__water lp-story-panel" data-layout-panel>
-        <div class="method-intro__water-copy">
-          <h3 class="reveal reveal--up" data-type-role="main">では、足りない水分はどこから補われるのか。</h3>
+  <section class="intro3-chapter p4-chapter" id="throatDryness" aria-labelledby="throatDrynessTitle">
+    <div class="intro3-inner">
+      <article class="p4-scene lp-story-panel" data-layout-panel>
+        <div class="intro3-copy">
+          <p class="intro3-sub reveal reveal--up" data-type-role="lead">では足りない水分はどこから補われるのか？</p>
+          <h2 id="throatDrynessTitle" class="intro3-title reveal reveal--up" data-type-role="main">あなたの喉です。</h2>
+          <p class="p4-figure__title reveal reveal--up" data-reveal-delay="80" data-type-role="close">冷たい空気を吸うほど、水分は奪われていく。</p>
         </div>
-        <div class="method-intro__process reveal reveal--up" data-reveal-delay="160" data-type-role="evidence">
-          <ol class="method-intro__steps">
-            <li>
-              <span>1</span>
-              <p>冷たい空気を<br><strong>吸い込む</strong></p>
+        <div class="throat-dryness__layout">
+          <ol class="throat-dryness__steps reveal reveal--up" data-reveal-delay="80" data-type-role="lead">
+            <li class="throat-dryness__step">
+              <div class="throat-dryness__text">乾いた空気を<strong>吸い込む</strong></div>
             </li>
-            <li>
-              <span>2</span>
-              <p>足りない水分を<br><strong>喉から補う</strong></p>
+            <li class="throat-dryness__step">
+              <div class="throat-dryness__text">喉の潤いから<strong>水分が蒸発</strong></div>
             </li>
-            <li>
-              <span>3</span>
-              <p>喉の水分が<br><strong>奪われる</strong></p>
+            <li class="throat-dryness__step">
+              <div class="throat-dryness__text">粘膜表面の<strong>潤いの膜が薄くなる</strong></div>
             </li>
           </ol>
-          <div class="method-intro__throat" aria-hidden="true">
-            <svg viewBox="0 0 360 310" focusable="false">
-              <path class="method-intro__silhouette" d="M336 297c-27-25-48-43-58-65-8-18-10-35-5-53 4-13 13-24 24-35 21-20 32-44 32-70 0-42-34-70-79-70-52 0-91 35-91 83 0 17 4 31 1 41-2 8-10 14-21 24l-12 13 12 7-2 19c-1 13 8 20 23 20h20c11 0 17 6 18 18l2 33c-12 13-24 25-36 35Z"></path>
-              <g class="method-intro__cold-air" fill="none" stroke-linecap="round">
-                <path d="M18 123c46-8 88 1 129 31" stroke-width="8"></path>
-                <path d="M22 98c47-5 92 13 126 56" stroke-width="4"></path>
-                <path d="M147 154c26 7 43 24 53 50 5 13 7 29 8 47" stroke-width="6"></path>
-              </g>
-              <g class="method-intro__snow">
-                <text x="58" y="104">❄</text>
-                <text x="88" y="132">❄</text>
-                <text x="109" y="96">❄</text>
-              </g>
-              <ellipse class="method-intro__throat-ring" cx="208" cy="230" rx="24" ry="38"></ellipse>
-              <ellipse class="method-intro__throat-core" cx="208" cy="230" rx="14" ry="31"></ellipse>
-              <path class="method-intro__water-drop" d="M190 216c-8 11-10 16-10 22a11 11 0 0 0 22 0c0-6-4-12-12-22Z"></path>
-              <line class="method-intro__throat-line" x1="229" y1="230" x2="264" y2="230"></line>
-              <text class="method-intro__throat-label" x="272" y="236">喉</text>
-            </svg>
-          </div>
+          <figure class="p4-figure reveal reveal--up" data-reveal-delay="160" data-type-role="evidence">
+            <img class="throat-dryness__image" src="img/drying.png" width="1713" height="918" alt="乾いた空気が口から入り、喉の粘膜表面の水分が気流へ蒸発する様子を示した模式図" loading="lazy" decoding="async">
+            <figcaption class="p4-figure__cap">※口呼吸時の喉の粘膜表面を模式的に表現したイメージです。</figcaption>
+          </figure>
         </div>
-        <h4 class="method-intro__answer method-intro__answer--closing reveal reveal--up" data-type-role="close">足りない水分を補うのは、あなたの喉です。</h4>
-      </div>
+      </article>
     </div>
   </section>
 
-  <section class="method-compare" id="methodCompare" aria-labelledby="methodCompareTitle">
-    <div class="lp-inner method-compare__inner">
-      <div class="method-compare__choice lp-story-panel" data-layout-panel>
-        <div class="method-compare__principle-copy">
-          <h2 id="methodCompareTitle" class="method-compare__title reveal reveal--up" data-type-role="main">
-            <span>だから私たちは、冬の寝室では</span>
-            「加湿」だけでなく
-            <strong>空気を冷やさないこと</strong>
-            <small>も大切だと考えました。</small>
-          </h2>
-          <p class="method-compare__lead reveal reveal--up" data-reveal-delay="80" data-type-role="support">しかも寝室は、毎晩、何時間も眠る場所。</p>
+  <section class="intro3-chapter p4-chapter" id="p4ColdAir" aria-labelledby="p4ColdAirTitle">
+    <div class="intro3-inner">
+      <article class="p4-scene lp-story-panel" data-layout-panel>
+        <div class="intro3-copy">
+          <p class="p4-body p4-coldair__intro reveal reveal--up" data-type-role="lead">寝室は、毎晩、何時間も眠る場所。</p>
+          <h2 id="p4ColdAirTitle" class="intro3-title reveal reveal--up" data-type-role="main"><span class="p4-coldair__pre">だから、冬の寝室には</span><span class="p4-coldair__main"><span class="steam-beyond__em">「加湿」</span>だけではなく<br class="br-sp"><span class="steam-beyond__em">「暖かさ」</span>も必要</span><span class="p4-coldair__pre">だと考えました。</span></h2>
         </div>
-        <div class="method-compare__pitfall-copy">
-          <p class="method-compare__pitfall-intro reveal reveal--up" data-type-role="support">もちろん、エアコンと加湿器を併用する方法もあります。</p>
-          <h3 class="method-compare__problem reveal reveal--up" data-reveal-delay="80" data-type-role="lead">でも、意外と難しいのが<strong>室温と湿度のバランス。</strong></h3>
+        <div class="intro3-blend reveal" data-reveal-delay="80" data-type-role="observation">
+          <img class="intro3-blend__img" src="img/warm.jpg" alt="" width="1000" height="660" loading="lazy" decoding="async" aria-hidden="true">
         </div>
-        <div class="method-compare__pitfall-visual" data-type-role="evidence">
-          <div class="balance-chart reveal reveal--up" data-reveal-delay="120">
-            <p class="balance-chart__caption">室温 × 湿度</p>
+        <aside class="intro3-supplement intro3-supplement--memo reveal reveal--up" id="methodIntroBalance" data-layout-panel aria-labelledby="methodIntroBalanceTitle" data-reveal-delay="160" data-type-role="evidence">
+          <div class="intro3-copy">
+            <h3 id="methodIntroBalanceTitle" class="intro3-title" data-type-role="main">エアコンで部屋を暖めても、<br>湿度は上がらない。</h3>
+            <p class="intro3-lead" data-type-role="lead">もちろん、エアコンと加湿器を併用する方法もあります。<br>でも、意外と難しいのが室温と湿度のバランス。<br>エアコンで室温は上がったのに、湿度は低いまま。<br>部屋は暖かい。でも、空気は乾いている。<br>そんな状態になることもあります。</p>
+          </div>
+          <div class="intro3-chart balance-chart">
+            <p class="balance-chart__caption">暖房で室温が上がるほど<br class="br-sp">相対湿度は下がりやすい</p>
             <div class="balance-chart__plot" aria-hidden="true">
               <span class="balance-chart__line balance-chart__line--temp"></span>
               <span class="balance-chart__line balance-chart__line--humidity"></span>
@@ -428,65 +405,67 @@ window.__lpJsWatchdog = setTimeout(function(){
               <span class="balance-chart__humidity">湿度 ↓</span>
             </div>
             <div class="balance-chart__labels"><span>使用開始</span><span>30分後</span></div>
-            <p class="method-compare__bridge" data-type-role="observation">
-              <span>エアコンで室温は上がったのに、湿度は低いまま。部屋は暖かい。でも、空気は乾いている。</span>
-              <span>そんな状態になることもあります。</span>
-            </p>
           </div>
-        </div>
-      </div>
-
-      <div class="method-compare__answer lp-story-panel" data-layout-panel>
-        <div class="method-compare__answer-copy">
-          <h3 class="reveal reveal--up" data-type-role="main">そこで私たちが選んだのが、水を加熱する<strong>スチーム式</strong>です。</h3>
-        </div>
-        <div class="method-compare__diff humid-diff" data-type-role="evidence">
-          <div class="humid-diff__compare-wrap reveal reveal--up" data-reveal-delay="120">
-            <h4 id="methodCompareDiffTitle" class="humid-diff__compare-title">超音波式とスチーム式の違い</h4>
-            <div class="humid-diff__compare" aria-labelledby="methodCompareDiffTitle">
-              <article class="humid-diff__card">
-                <div class="humid-diff__visual" aria-hidden="true" hidden>
-                  <div class="humid-diff__mist"></div>
-                  <div class="humid-diff__droplet-zone">
-                    <div class="humid-diff__drop-cluster"></div>
-                    <div class="humid-diff__drop-extra"></div>
-                    <div class="humid-diff__fog-dots"></div>
-                    <i class="humid-diff__drop" style="left:43%;top:14%;--s:3px;--d:.1s"></i><i class="humid-diff__drop" style="left:51%;top:17%;--s:2px;--d:1.1s"></i><i class="humid-diff__drop" style="left:58%;top:20%;--s:4px;--d:2.2s"></i><i class="humid-diff__drop" style="left:37%;top:23%;--s:2px;--d:.7s"></i><i class="humid-diff__drop" style="left:47%;top:26%;--s:4px;--d:1.7s"></i><i class="humid-diff__drop" style="left:63%;top:28%;--s:3px;--d:2.8s"></i><i class="humid-diff__drop" style="left:32%;top:31%;--s:3px;--d:3.4s"></i><i class="humid-diff__drop" style="left:54%;top:33%;--s:2px;--d:.4s"></i><i class="humid-diff__drop" style="left:68%;top:35%;--s:4px;--d:1.4s"></i><i class="humid-diff__drop" style="left:41%;top:38%;--s:3px;--d:2.4s"></i><i class="humid-diff__drop" style="left:49%;top:41%;--s:5px;--d:3.1s"></i><i class="humid-diff__drop" style="left:59%;top:43%;--s:2px;--d:.9s"></i><i class="humid-diff__drop" style="left:28%;top:45%;--s:4px;--d:1.9s"></i><i class="humid-diff__drop" style="left:72%;top:47%;--s:3px;--d:2.9s"></i><i class="humid-diff__drop" style="left:36%;top:50%;--s:2px;--d:.2s"></i><i class="humid-diff__drop" style="left:46%;top:52%;--s:3px;--d:1.2s"></i><i class="humid-diff__drop" style="left:64%;top:54%;--s:4px;--d:2.1s"></i><i class="humid-diff__drop" style="left:24%;top:57%;--s:3px;--d:3.3s"></i><i class="humid-diff__drop" style="left:54%;top:58%;--s:2px;--d:.6s"></i><i class="humid-diff__drop" style="left:76%;top:60%;--s:3px;--d:1.6s"></i><i class="humid-diff__drop" style="left:31%;top:63%;--s:4px;--d:2.6s"></i><i class="humid-diff__drop" style="left:43%;top:65%;--s:2px;--d:3.6s"></i><i class="humid-diff__drop" style="left:60%;top:67%;--s:3px;--d:.8s"></i><i class="humid-diff__drop" style="left:69%;top:69%;--s:2px;--d:1.8s"></i>
-                  </div>
-                  <div class="humid-diff__emitter"></div>
+          <p class="intro3-note intro3-note--chart">※図は室温と湿度の関係を表した模式図で、実測値ではありません。</p>
+          <details class="intro3-evidence">
+            <summary class="intro3-evidence__summary">理論計算値・算定根拠</summary>
+            <div class="intro3-evidence__body">
+              <p class="intro3-evidence__precondition">一般的な冬季の室内環境を例とした、理論上の計算値です。実際の室温・湿度は住環境や地域により異なります。</p>
+              <figure class="intro3-evidence__figure">
+                <div class="intro3-evidence__table-wrap">
+                  <table class="intro3-evidence__table">
+                    <caption class="u-visually-hidden">水分を加えず加温した場合の、室温と相対湿度の理論計算値</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">条件</th>
+                        <th scope="col">室温</th>
+                        <th scope="col">絶対水蒸気量</th>
+                        <th scope="col">計算上の<br>相対湿度</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">暖房稼働前</th>
+                        <td>12 ℃</td>
+                        <td>約 5.3 g/m³（一定）</td>
+                        <td>約 50 %</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">10℃加温後（水分補給なし）</th>
+                        <td>22 ℃</td>
+                        <td>約 5.3 g/m³（一定）</td>
+                        <td>約 27 %</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div class="humid-diff__copy">
-                  <span class="humid-diff__tag">超音波式</span>
-                  <h5 class="humid-diff__card-title">水を振動で、霧状の液滴に。</h5>
-                  <p class="humid-diff__card-text">振動で水を霧化し、微細な液滴のまま空間へ放出します。水分は気体になる前に、粒子として空気中に広がります。</p>
-                </div>
-              </article>
-
-              <article class="humid-diff__card humid-diff__card--steam">
-                <div class="humid-diff__visual humid-diff__visual--steam" aria-hidden="true" hidden>
-                  <div class="humid-diff__air" style="--b:96px;--w:290px;--h:160px;--d:0s"></div>
-                  <div class="humid-diff__air" style="--b:136px;--w:390px;--h:205px;--d:-2.3s"></div>
-                  <div class="humid-diff__air" style="--b:176px;--w:470px;--h:240px;--d:-4.6s"></div>
-                  <div class="humid-diff__heat"></div>
-                  <div class="humid-diff__emitter"></div>
-                </div>
-                <div class="humid-diff__copy">
-                  <span class="humid-diff__tag humid-diff__tag--solid">STENA / スチーム式</span>
-                  <h5 class="humid-diff__card-title">水を加熱して、水蒸気に。</h5>
-                  <p class="humid-diff__card-text">加熱して水を水蒸気に変え、気体として空気へ届けます。</p>
-                </div>
-              </article>
+                <p class="intro3-evidence__source">WMO（世界気象機関）「Guide to Meteorological Instruments and Methods of Observation (WMO-No.8)」に基づく飽和水蒸気量算出式（標準大気圧1013.25hPa下）を使用。水分の出入りがない室内において、温度上昇に伴い飽和水蒸気量が増大することによる相対湿度の変化を算出しています。</p>
+              </figure>
             </div>
-          </div>
-          <small class="humid-diff__note">※画像は加湿方式による水の状態の違いを表したイメージ（模式図）です。粒子の大きさ・密度・縮尺を正確に示すものではありません。<br>※使用環境や湿度設定によっては結露する場合があります。</small>
+          </details>
+        </aside>
+        <p class="intro3-close reveal reveal--up" data-reveal-delay="200" data-type-role="close">だったら、<br class="br-sp">最初から熱と湿度を一緒に届ければいい。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="method-compare intro3-chapter" id="methodCompare" aria-labelledby="methodCompareTitle">
+    <div class="intro3-inner">
+      <article class="intro3-scene lp-story-panel" data-layout-panel>
+        <div class="intro3-copy">
+          <p class="intro3-sub reveal reveal--up" data-type-role="lead">冬の寝室への、STENAの答え</p>
+          <h2 id="methodCompareTitle" class="intro3-title reveal reveal--up" data-type-role="main">私たちが選んだのは、<br>熱と湿度を同時に供給できる<br class="br-sp"><span class="steam-beyond__em">スチーム式</span>です。</h2>
+          <p class="intro3-lead reveal reveal--up" data-reveal-delay="80" data-type-role="lead">水を加熱して蒸気にするから、<br><strong class="intro3-lead__emphasis">暖かさと潤いを、同時に届けられる。</strong><br>ただ湿度を上げるためではなく、<br class="br-pc">冬の寝室そのものを、暖かく、潤いのある空間にするために。</p>
         </div>
-        <h4 class="method-compare__steam-close reveal reveal--up" data-type-role="close">水を加熱して蒸気にするから、<strong>加湿しても、空気を冷やさない。</strong></h4>
-      </div>
+        <div class="intro3-blend reveal" data-reveal-delay="120" data-type-role="evidence">
+          <img class="intro3-blend__img" src="img/choice.jpg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+        </div>
+        <p class="intro3-close reveal reveal--up" data-reveal-delay="160" data-type-role="close">毎日の眠りを支える場所だからこそ。<br class="br-pc">私たちは、<strong class="intro3-lead__emphasis">寝室のための加湿</strong>を考えました。</p>
+      </article>
     </div>
   </section>
 
   <section class="steam-answer lp-band--lg" id="steamAnswer" aria-labelledby="steamAnswerTitle">
-    <img class="steam-answer__bg" src="img/item_bg.jpg" alt="" decoding="async" aria-hidden="true">
     <div class="lp-inner">
       <header class="steam-answer__header lp-band__head">
         <p class="steam-answer__sub lp-band__eyebrow reveal reveal--up">STENAのスチーム式加湿器</p>
@@ -522,6 +501,7 @@ window.__lpJsWatchdog = setTimeout(function(){
         </div>
       </div>
       <small class="humid-diff__note">※加湿方式の一般的な特徴を示したイメージです。暖房機能を示すものではありません。</small>
+      <img class="steam-answer__img reveal reveal--up" src="img/item_bg.jpg" alt="" width="720" height="900" loading="lazy" decoding="async" aria-hidden="true" data-reveal-delay="200">
     </div>
   </section>
 
@@ -536,14 +516,14 @@ window.__lpJsWatchdog = setTimeout(function(){
         <table class="steam-vs" aria-label="炎色反応テストの比較">
           <thead>
             <tr>
-              <th scope="col">超音波式</th>
               <th scope="col" class="steam-vs__brand">スチーム式（STENA）</th>
+              <th scope="col">超音波式</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>炎色反応あり</td>
-              <td>炎色反応なし</td>
+              <td class="steam-vs__brand">炎色反応なし</td>
+              <td class="steam-vs__flame">炎色反応あり</td>
             </tr>
           </tbody>
         </table>
@@ -557,16 +537,13 @@ window.__lpJsWatchdog = setTimeout(function(){
   <section class="steam-cost lp-section--slate lp-band--md" id="steamFilterless" aria-labelledby="steamFilterlessTitle">
     <div class="steam-cost__inner lp-band__head">
       <h2 id="steamFilterlessTitle" class="lp-band__title reveal reveal--up">フィルターレスで、<br><span class="steam-beyond__em">お手入れも簡単。</span></h2>
-      <p class="steam-design__lead lp-band__lead reveal reveal--up" data-reveal-delay="80">毎晩使いたいから、お手入れの負担は少なく。加湿フィルターや細かいパーツを洗う手間がありません。</p>
+      <p class="steam-design__lead lp-band__lead reveal reveal--up" data-reveal-delay="80">毎晩使いたいから、お手入れの負担は少なく。<strong>加湿フィルターや細かいパーツを洗う手間も、定期交換も必要ありません。</strong></p>
     </div>
     <ul class="steam-none-list reveal reveal--up" data-reveal-delay="120" aria-label="交換や手入れが必要な部品はありません">
       <li><span>加湿フィルター</span><strong>なし</strong></li>
       <li><span>抗菌カートリッジ</span><strong>なし</strong></li>
       <li><span>細かいパーツ</span><strong>なし</strong></li>
     </ul>
-    <div class="steam-cost__inner">
-      <p class="steam-design__lead lp-band__lead reveal reveal--up" data-reveal-delay="160">加湿フィルターなどの定期交換や買い足しもありません。</p>
-    </div>
   </section>
 
   <section class="doctor-comment lp-section--slate lp-band--md" id="doctorComment" aria-labelledby="doctorCommentTitle">
@@ -610,26 +587,26 @@ window.__lpJsWatchdog = setTimeout(function(){
         <caption class="steam-vs__caption reveal reveal--up" data-reveal-delay="200">その4つの不満を解消する、<br>STENA独自の設計。</caption>
         <thead>
           <tr>
-            <th scope="col">従来のスチーム式</th>
             <th scope="col" class="steam-vs__brand">STENA</th>
+            <th scope="col">従来のスチーム式</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td class="steam-vs__brand"><small>蒸気発生まで</small>約5分</td>
             <td>30分前後待つ<small>※当社比較対象製品との比較</small></td>
-            <td><small>蒸気発生まで</small>約5分</td>
           </tr>
           <tr>
+            <td class="steam-vs__brand"><small>電気代</small>約30円／日<small>※Lowモード10時間使用の場合</small></td>
             <td>電気代が高い</td>
-            <td><small>電気代</small>約30円／日<small>※Lowモード10時間使用の場合</small></td>
           </tr>
           <tr>
+            <td class="steam-vs__brand"><small>運転音</small>約33dB</td>
             <td>音が気になる</td>
-            <td><small>運転音</small>約33dB</td>
           </tr>
           <tr>
+            <td class="steam-vs__brand"><small>見た目</small>空間に美しく調和</td>
             <td>見た目が微妙</td>
-            <td><small>見た目</small>空間に美しく調和</td>
           </tr>
         </tbody>
       </table>
@@ -641,7 +618,7 @@ window.__lpJsWatchdog = setTimeout(function(){
       <p class="steam-beyond__cards-sub">温かいスチームが立ちのぼるまでの時間を、<strong>約1/6に短縮。</strong></p>
 
       <figure class="steam-beyond__video">
-        <video id="steamBeyondVideo" src="https://official.stena.jp/mov/stena-hikaku.mp4" autoplay muted loop playsinline preload="auto" aria-label="加熱構造の比較動画"></video>
+        <video id="steamBeyondVideo" src="https://official.stena.jp/mov/stena-hikaku2.mp4" autoplay muted loop playsinline preload="auto" aria-label="加熱構造の比較動画"></video>
         <figcaption class="steam-beyond__note"><small>※STENAと市販の他社製スチーム式加湿器を同一室内で比較した映像に基づきます。蒸気発生までの時間は水温・室温・水量等により異なります。</small></figcaption>
       </figure>
 
@@ -653,7 +630,7 @@ window.__lpJsWatchdog = setTimeout(function(){
             <figure class="lp-card__media">
               <img src="img/tec1.jpg" alt="二重円筒ヒーティングパイプ" width="800" height="600" loading="lazy" decoding="async">
             </figure>
-            <h3 class="lp-card__title">約5分の立ち上がりを支える、<br><strong>二重円筒ヒーティングパイプ。</strong></h3>
+            <h3 class="lp-card__title">約5分の立ち上がりを支える、<br>二重円筒ヒーティングパイプ。</h3>
             <p class="lp-card__lead">魔法瓶から着想した真空二重構造をタンク中央に配置。二重の円筒の間に設けた真空層が、熱を中心部に閉じ込め、加熱効率を高めます。</p>
           </article>
           <article class="lp-card">
@@ -687,20 +664,23 @@ window.__lpJsWatchdog = setTimeout(function(){
       <h2 id="steamQuietTitle" class="lp-band__title reveal reveal--up">寝室で使いやすい<br><span class="steam-beyond__em">静かな動作音</span></h2>
       <p class="steam-design__lead lp-band__lead reveal reveal--up" data-reveal-delay="80">ヒーティングパイプで少量ずつ沸騰させ、スチーム圧制御バルブで大きな沸騰音を軽減。<br>沸騰後の運転音は、深夜の郊外レベルの静かさです。</p>
       <ul class="steam-quiet-db reveal reveal--up" data-reveal-delay="120" aria-label="動作音の目安比較">
-        <li>
-          <span class="steam-quiet-db__num">20</span>
-          <span class="steam-quiet-db__unit">dB</span>
-          <span class="steam-quiet-db__label">木の葉の触れ合う音</span>
+        <li style="--db:20">
+          <div class="steam-quiet-db__bar">
+            <span class="steam-quiet-db__num">20</span><span class="steam-quiet-db__unit">dB</span>
+          </div>
+          <span class="steam-quiet-db__label">木の葉の<br>触れ合う音</span>
         </li>
-        <li class="steam-quiet-db__item--stena">
-          <span class="steam-quiet-db__num">33</span>
-          <span class="steam-quiet-db__unit">dB</span>
+        <li class="steam-quiet-db__item--stena" style="--db:33">
           <span class="steam-quiet-db__brand">STENA</span>
+          <div class="steam-quiet-db__bar">
+            <span class="steam-quiet-db__num">33</span><span class="steam-quiet-db__unit">dB</span>
+          </div>
           <span class="steam-quiet-db__label">深夜の郊外</span>
         </li>
-        <li>
-          <span class="steam-quiet-db__num">40</span>
-          <span class="steam-quiet-db__unit">dB</span>
+        <li style="--db:40">
+          <div class="steam-quiet-db__bar">
+            <span class="steam-quiet-db__num">40</span><span class="steam-quiet-db__unit">dB</span>
+          </div>
           <span class="steam-quiet-db__label">図書館</span>
         </li>
       </ul>
@@ -795,7 +775,7 @@ window.__lpJsWatchdog = setTimeout(function(){
           <div class="proof__badge-inner">
             <img class="proof__laurel proof__laurel--sm" src="img/prize_bg.png" alt="" width="120" height="280" loading="lazy" decoding="async" aria-hidden="true">
             <div class="proof__badge-body">
-              <p>韓国最大EC（NAVER）「加湿器」検索1位</p>
+              <p>韓国最大EC（NAVER）「加湿器」検索</p>
               <p class="proof__badge-em proof__badge-em--xl">No.1</p>
               <small class="proof__note">※2025年11月5日</small>
             </div>
@@ -958,12 +938,6 @@ window.__lpJsWatchdog = setTimeout(function(){
           </div>
         </div>
       </div>
-      <div data-review-note="tank-safety-37" style="margin:20px 0 0;padding:16px 18px;border:2px dashed #dc2626;border-radius:8px;background:#fef2f2;color:#7f1d1d;font-size:14px;line-height:1.8;text-align:left;">
-        <p style="margin:0 0 10px;font-weight:700;font-size:13px;letter-spacing:.05em;color:#b91c1c;">【校閲メモ｜要メーカー確認｜公開前に必ず削除してください】</p>
-        <p style="margin:0 0 8px;">種別: 景品表示法（絶対断定）・コンテンツの矛盾 ｜ 危険度: 中</p>
-        <p style="margin:0 0 8px;">指摘: 「本体外側は約37℃に保たれ、熱くなりません。」は、①「熱くなりません」が無条件の断定であること、②「約37℃」の測定条件（室温・運転モード・測定部位）の記載がないこと、③ページ内の他箇所（CASE02・FAQ）の「蒸気の吹出口や蓋付近は高温になります」と無条件の断定が衝突すること、の3点で修正が必要です。</p>
-        <p style="margin:0;">判定: 改善可能 → 提案: 「断熱エア層により外側へ熱が伝わりにくく、本体側面は約37℃※に保たれます。」＋「※室温○℃・○○モード運転時の当社測定値。蒸気の吹出口・蓋付近を除きます。」（測定条件の実測値はメーカーへ確認のうえ記入してください）</p>
-      </div>
     </div>
   </section>
 
@@ -1013,27 +987,29 @@ window.__lpJsWatchdog = setTimeout(function(){
   </section>
 
   <section class="steam-cost lp-section--dark lp-band--md" id="steamCare" aria-labelledby="steamCareTitle">
-    <div class="steam-cost__inner lp-band__head">
-      <h2 id="steamCareTitle" class="lp-band__title reveal reveal--up">面倒な掃除は、必要ありません。</h2>
-    </div>
-    <div class="steam-design__feature lp-feature reveal reveal--up" data-reveal-delay="80">
-      <figure class="steam-design__feature-media">
-        <img src="img/clean1.jpg" alt="フラットなオールステンレスタンク" width="800" height="600" loading="lazy" decoding="async">
-      </figure>
-      <div>
-        <h3 class="tank-item-title">フラットなオールステンレスタンク</h3>
-        <h4 class="tank-item-title">凹凸が少なく、手入れしやすい</h4>
-        <p class="tank-item-body">手が届きやすい、フラットなタンク。カルキ汚れは中央部分に集まりやすく、お手入れもスムーズです。オールステンレスなので、コーティング剥がれの心配もありません。</p>
+    <div class="lp-inner lp-inner--sm">
+      <header class="lp-band__head">
+        <h2 id="steamCareTitle" class="lp-band__title reveal reveal--up">面倒な掃除は、必要ありません。</h2>
+      </header>
+      <div class="steam-design__feature lp-feature reveal reveal--up" data-reveal-delay="80">
+        <figure class="steam-design__feature-media">
+          <img src="img/clean1.jpg" alt="フラットなステンレスタンク" width="800" height="600" loading="lazy" decoding="async">
+        </figure>
+        <div>
+          <h3 class="tank-item-title">フラットなステンレスタンク</h3>
+          <h4 class="tank-item-title">凹凸が少なく、手入れしやすい</h4>
+          <p class="tank-item-body">手が届きやすい、フラットなタンク。カルキ汚れは中央部分に集まりやすく、お手入れもスムーズです。オールステンレスなので、コーティング剥がれの心配もありません。</p>
+        </div>
       </div>
-    </div>
-    <div class="steam-design__feature lp-feature reveal reveal--up" data-reveal-delay="120">
-      <figure class="steam-design__feature-media">
-        <img src="img/autoclean.jpg" alt="オートクリーンモードの操作" width="800" height="600" loading="lazy" decoding="async">
-      </figure>
-      <div>
-        <h3 class="tank-item-title">オートクリーンモード</h3>
-        <h4 class="tank-item-title">クエン酸を入れて、ボタン１つで30分洗浄</h4>
-        <p class="tank-item-body">汚れが気になったときだけ、お手入れすればOK。毎日お使いの方も、週に1度CLEANモードを使えば、新品のようなキレイさをキープできます。</p>
+      <div class="steam-design__feature lp-feature reveal reveal--up" data-reveal-delay="120">
+        <figure class="steam-design__feature-media">
+          <img src="img/autoclean.jpg" alt="オートクリーンモードの操作" width="800" height="600" loading="lazy" decoding="async">
+        </figure>
+        <div>
+          <h3 class="tank-item-title">オートクリーンモード</h3>
+          <h4 class="tank-item-title">クエン酸を入れて、ボタン１つで30分洗浄</h4>
+          <p class="tank-item-body">汚れが気になったときだけ、お手入れすればOK。毎日お使いの方も、週に1度CLEANモードを使えば、新品のようなキレイさをキープできます。</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1044,15 +1020,14 @@ window.__lpJsWatchdog = setTimeout(function(){
         <h2 id="tankSteelTitle" class="lp-band__title reveal reveal--up">素材も、技術も。<br><span class="steam-beyond__em">見えないところまで上質に。</span></h2>
         <p class="tank-lead lp-band__lead reveal reveal--up" data-reveal-delay="80">選び抜いた素材と、性能を支える職人の技術。<br>その一つひとつが、STENAの品質です。</p>
       </header>
-      <div class="tank-material__hero reveal reveal--up" data-reveal-delay="120">
-        <img src="img/material-316ti-hero.jpg" alt="316TiステンレスでつくられたSTENAの部品に刻まれた素材表記" width="1200" height="1224" loading="lazy" decoding="async">
-        <div class="tank-material__hero-shade" aria-hidden="true"></div>
-        <div class="tank-material__hero-copy">
-          <p class="lp-band__eyebrow">高耐食・高耐熱素材</p>
-          <h3 class="lp-band__title">316Tiステンレス</h3>
-        </div>
-      </div>
-      <p class="tank-lead lp-band__lead reveal reveal--up" data-reveal-delay="160">STENAでは、水・熱・蒸気に触れ続ける部分に「316Tiステンレス」を採用。<br><br>一般的なステンレス「304」よりサビや腐食に強く、衛生管理が求められる医療機器や医薬品製造設備の部品にも使われる素材です。<br><br>チタンを含有する「316Ti」は、「316L」より高い温度域での使用にも適しています。腐食や摩耗、繰り返しの洗浄にも強く、長く清潔に使えます。</p>
+      <aside class="tank-aside tank-material__aside reveal reveal--up" aria-labelledby="tankSteelMaterialTitle" data-reveal-delay="120">
+        <figure class="tank-material__aside-media">
+          <img src="img/material-316ti-hero.jpg" alt="316TiステンレスでつくられたSTENAの部品に刻まれた素材表記" width="1200" height="1224" loading="lazy" decoding="async">
+        </figure>
+        <p class="tank-material__aside-eyebrow">高耐食・高耐熱素材</p>
+        <h3 id="tankSteelMaterialTitle" class="tank-material__aside-title">316Tiステンレス</h3>
+        <p class="tank-material__aside-lead">STENAでは、水・熱・蒸気に触れ続ける部分に「316Tiステンレス」を採用。<br><br>一般的なステンレス「304」よりサビや腐食に強く、衛生管理が求められる医療機器や医薬品製造設備の部品にも使われる素材です。<br><br>チタンを含有する「316Ti」は、「316L」より高い温度域での使用にも適しています。腐食や摩耗、繰り返しの洗浄にも強く、長く清潔に使えます。</p>
+      </aside>
     </div>
   </section>
 
@@ -1153,82 +1128,50 @@ window.__lpJsWatchdog = setTimeout(function(){
         <p class="steam-answer__sub lp-band__eyebrow reveal reveal--up">無垢・無塗装だから</p>
         <h2 id="tankWashTitle" class="lp-band__title reveal reveal--up" data-reveal-delay="80">繰り返し洗える<br>輝きが蘇る</h2>
       </header>
-      <img class="tank-visual reveal reveal--up" src="img/clean1.jpg" alt="フラットなオールステンレスタンク" width="800" height="600" loading="lazy" decoding="async" data-reveal-delay="100">
+      <img class="tank-visual reveal reveal--up" src="img/clean1.jpg" alt="フラットなステンレスタンク" width="800" height="600" loading="lazy" decoding="async" data-reveal-delay="100">
       <p class="tank-lead lp-band__lead reveal reveal--up" data-reveal-delay="120">コーティングの劣化を気にせず、クエン酸で繰り返し洗浄できます。<br>洗うたび、無垢ステンレス本来の清潔さと輝きが蘇ります。</p>
-      <div class="tank-part reveal reveal--up" data-reveal-delay="160">
-        <span class="tank-part__where">約200℃の耐熱性</span>
-        <h3 class="tank-item-title">KCC プラチナシリコン</h3>
-        <p class="tank-item-body">蒸気に触れる部品には、プラチナシリコンを採用。約200℃の耐熱性を持ち、臭いが少なく、安全性が求められるベビー用品にも使われる素材です。</p>
-      </div>
-      <div class="tank-part reveal reveal--up" data-reveal-delay="240">
-        <span class="tank-part__where">熱と衝撃に強い外装</span>
-        <h3 class="tank-item-title">LG ABS 409</h3>
-        <p class="tank-item-body">外装には、高耐熱のABS 409を採用。熱による変形を抑え、日常の衝撃にも強い素材です。</p>
-      </div>
+      <aside class="tank-aside reveal reveal--up" aria-labelledby="tankWashPartsTitle" data-reveal-delay="140">
+        <h3 id="tankWashPartsTitle" class="tank-compare__title">細部まで選び抜いた素材</h3>
+        <div class="tank-part reveal reveal--up" data-reveal-delay="160">
+          <span class="tank-part__where">約200℃の耐熱性</span>
+          <h4 class="tank-item-title">KCC プラチナシリコン</h4>
+          <p class="tank-item-body">蒸気に触れる部品には、プラチナシリコンを採用。約200℃の耐熱性を持ち、臭いが少なく、安全性が求められるベビー用品にも使われる素材です。</p>
+        </div>
+        <div class="tank-part reveal reveal--up" data-reveal-delay="240">
+          <span class="tank-part__where">熱と衝撃に強い外装</span>
+          <h4 class="tank-item-title">LG ABS 409</h4>
+          <p class="tank-item-body">外装には、高耐熱のABS 409を採用。熱による変形を抑え、日常の衝撃にも強い素材です。</p>
+        </div>
+      </aside>
     </div>
   </section>
 
 <section class="tank-compare lp-section--dark lp-band--md" id="tankCraft" aria-labelledby="tankCraftTitle">
-    <div class="tank-inner tank-inner--wide">
+    <div class="lp-inner lp-inner--sm">
       <header class="lp-band__head">
-        <h2 id="tankCraftTitle" class="tank-title lp-band__title reveal reveal--up" data-reveal-delay="80">型から、仕上げまで。</h2>
+        <h2 id="tankCraftTitle" class="tank-title lp-band__title reveal reveal--up" data-reveal-delay="80">職人技が宿る<br class="br-sp">STENAの心臓部</h2>
       </header>
       <div class="tank-craft">
         <div class="tank-craft__row reveal reveal--up" data-reveal-delay="200">
-          <p class="tank-craft__copy">6か月で9回に及ぶ金型修正で導き出した、<br class="br-sp">理想の円錐角度。</p>
+          <div class="tank-craft__copy">
+            <h3 class="tank-craft__heading">追求した<br>理想の円錐角度</h3>
+            <p class="tank-craft__lead">6か月、9回に及ぶ金型修正を重ね、理想の円錐角度を導き出しました。</p>
+          </div>
           <figure class="tank-craft__media">
             <img src="img/craft-mold-revisions.jpg" alt="金型検討段階のステンレス円錐部品" loading="lazy" decoding="async" width="800" height="800">
           </figure>
         </div>
         <div class="tank-craft__row tank-craft__row--flip reveal reveal--up" data-reveal-delay="240">
-          <p class="tank-craft__copy">熟練ステンレス職人が<br class="br-sp">7工程を一つひとつ手作業で担当。</p>
+          <div class="tank-craft__copy">
+            <h3 class="tank-craft__heading">職人が、<br>7工程を手作業で</h3>
+            <p class="tank-craft__lead">切断から最終仕上げまで、熟練のステンレス職人が一つひとつ手作業で担当します。</p>
+          </div>
           <figure class="tank-craft__media">
             <img src="img/craftsmanship.jpg" alt="ステンレス職人がプレス加工を行う様子" loading="lazy" decoding="async" width="800" height="800">
           </figure>
         </div>
-        <ol class="tank-craft__steps reveal reveal--up" data-reveal-delay="280" aria-label="製造工程">
-          <li>切削</li>
-          <li>圧延</li>
-          <li>溶接</li>
-          <li>研磨</li>
-          <li>電解</li>
-          <li>精密測定</li>
-          <li>最終仕上げ</li>
-        </ol>
-        <div class="tank-craft__row reveal reveal--up" data-reveal-delay="200">
-          <p class="tank-craft__copy">研磨後は、指先でも段差を感じにくい鏡面に。<br class="br-sp">水流を乱さず、約5分の加熱を陰で支えます。</p>
-          <figure class="tank-craft__media">
-            <img src="img/craft-mirror-finish.jpg" alt="研磨・組み付け後のステンレスタンク内部" loading="lazy" decoding="async" width="800" height="800">
-          </figure>
-        </div>
-        <div class="tank-craft__row tank-craft__row--flip reveal reveal--up" data-reveal-delay="240">
-          <p class="tank-craft__copy">高純度316Tiステンレス特有のやわらかな光沢は、<br class="br-sp">水垢が付きにくく、美しさを保ちやすい素材です。</p>
-          <figure class="tank-craft__media">
-            <img src="img/material-clean-tank.jpg" alt="316Tiステンレスタンクの内面に水を流す様子" loading="lazy" decoding="async" width="800" height="800">
-          </figure>
-        </div>
-        <div class="tank-craft__row reveal reveal--up" data-reveal-delay="280">
-          <p class="tank-craft__copy">量産ラインでは出しにくい精密さと気密性をめざした、<br class="br-sp">このヒーティングパイプこそSTENAの心臓部です。</p>
-          <figure class="tank-craft__media">
-            <img src="img/craft-heating-pipe.jpg" alt="ブラッシュ仕上げのヒーティングパイプ" loading="lazy" decoding="async" width="800" height="800">
-          </figure>
-        </div>
-      </div>
 
-      <div class="tank-parts__pair tank-compare__specs">
-        <div class="tank-part reveal reveal--up" data-reveal-delay="200">
-          <h3 class="tank-item-title">KCCプラチナシリコン</h3>
-          <p class="tank-item-body">200℃の耐熱性と低臭性に優れたシリコン。蒸気まわりのシールに用います。</p>
-        </div>
-        <div class="tank-part reveal reveal--up" data-reveal-delay="240">
-          <h3 class="tank-item-title">外装</h3>
-          <p class="tank-item-body">加熱部の外側は二重構造で、熱の伝わりを抑える設計です。</p>
-        </div>
-      </div>
-
-      <small class="tank-note reveal reveal--up" data-reveal-delay="240">※写真はイメージです。実際の形状・仕上げは製品により異なります。</small>
-    
-      <ol class="mp-craft-flow reveal reveal--up" data-reveal-delay="280" aria-label="7つの製造工程">
+        <ol class="mp-craft-flow reveal reveal--up" data-reveal-delay="280" aria-label="7つの製造工程">
           <li><span>切断</span></li>
           <li><span>圧延</span></li>
           <li><span>溶接</span></li>
@@ -1237,9 +1180,32 @@ window.__lpJsWatchdog = setTimeout(function(){
           <li><span>精密<br>測定</span></li>
           <li><span>最終<br>仕上げ</span></li>
         </ol>
+
+        <div class="tank-craft__row reveal reveal--up" data-reveal-delay="200">
+          <div class="tank-craft__copy">
+            <h3 class="tank-craft__heading">滑らかな<br>鏡面仕上げ</h3>
+            <p class="tank-craft__lead">約5分の加熱を支える、水流を乱しにくい滑らかさ。研磨後は指先でも段差を感じにくく、水垢が付きにくい仕上げです。</p>
+          </div>
+          <figure class="tank-craft__media">
+            <img src="img/craft-mirror-finish.jpg" alt="研磨・組み付け後のステンレスタンク内部" loading="lazy" decoding="async" width="800" height="800">
+          </figure>
+        </div>
+        <div class="tank-craft__row tank-craft__row--flip reveal reveal--up" data-reveal-delay="240">
+          <div class="tank-craft__copy">
+            <h3 class="tank-craft__heading">精密技術が生む<br>ヒーティングパイプ</h3>
+            <p class="tank-craft__lead">量産ラインでは再現が難しい、精密さと気密性をめざした構造。このヒーティングパイプこそ、STENAの心臓部です。</p>
+          </div>
+          <figure class="tank-craft__media">
+            <img src="img/craft-heating-pipe.jpg" alt="ブラッシュ仕上げのヒーティングパイプ" loading="lazy" decoding="async" width="800" height="800">
+          </figure>
+        </div>
+      </div>
+
+      <small class="tank-note reveal reveal--up" data-reveal-delay="240">※写真はイメージです。実際の形状・仕上げは製品により異なります。</small>
     </div>
   </section>
 
+  <!--
   <section class="story-closing lp-section--dark" id="storyClosing" aria-labelledby="storyClosingTitle">
     <div class="story-closing__inner">
       <figure class="story-closing__video reveal reveal--up">
@@ -1264,6 +1230,7 @@ window.__lpJsWatchdog = setTimeout(function(){
       </p>
     </div>
   </section>
+  -->
 
   <section class="howto lp-section" id="howto" aria-labelledby="howtoTitle">
     <div class="howto__inner">
