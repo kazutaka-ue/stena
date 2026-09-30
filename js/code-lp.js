@@ -245,7 +245,7 @@ window.LP = (() => {
     let hideTimer = null;
 
     function resolveAnchor(){
-      const selector = document.body.dataset.fixCtaAfter;
+      const selector = fixCta.dataset.fixCtaAfter || document.body.dataset.fixCtaAfter;
       anchor = selector ? document.querySelector(selector) : null;
     }
 
@@ -309,6 +309,15 @@ window.LP = (() => {
 
   const resumeVideos = new Set();
 
+  function armInlineAutoplay(video){
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+  }
+
   document.addEventListener('visibilitychange', () => {
     if(document.hidden) return;
     resumeVideos.forEach((tryPlay) => tryPlay());
@@ -323,11 +332,15 @@ window.LP = (() => {
         if(!shouldPlay) return;
         const go = () => {
           if(!shouldPlay) return;
+          armInlineAutoplay(video);
           const p = video.play();
           if(p && p.catch) p.catch(() => {});
         };
         if(video.readyState >= 2) go();
-        else video.addEventListener('loadeddata', go, { once: true });
+        else{
+          video.addEventListener('loadeddata', go, { once: true });
+          video.addEventListener('canplay', go, { once: true });
+        }
       };
 
       if(reduceMotion){
@@ -414,6 +427,7 @@ window.LP = (() => {
   function initTankHeroVideo(){
     document.querySelectorAll('.tank-hero__visual').forEach((video) => {
       whenVisible(video, () => {
+        armInlineAutoplay(video);
         video.currentTime = 0;
         const p = video.play();
         if(p && p.catch) p.catch(() => {});

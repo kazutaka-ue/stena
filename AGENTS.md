@@ -60,6 +60,24 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 - コピー変更時は見た目だけでなく **表現リスク（§7）** も点検する。
 - 新規セクション追加時は、実装前に **見出しアウトライン（§6）** を確認する。
 
+### WIP 編集の安全規則（必須）
+
+未コミットの HTML/CSS を壊した事故（`git checkout` で WIP 破棄、PowerShell 文字化け、transcript 全量再生）を踏まえ、次を **硬ルール** とする。会話上の合意だけでは不十分で、エージェントは本節に従う。
+
+**禁止（ユーザーの明示依頼がない限り）**
+
+- **あらゆる git 操作**（`checkout` / `restore` / `reset` / `commit` / `push` / `stash` など）。日々のコーディングに git を混ぜない。載せるときはユーザーが「纏めて」依頼したときだけ
+- **日本語 HTML/CSS の内容を PowerShell で読み書き・置換しない**（`Set-Content` / `Out-File` / パイプでの本文生成を含む）。PowerShell は `Copy-Item` や `node …` 起動までに留める
+- 「HEAD から作り直して transcript で全部当てる」を、軽いリファクタの前提手順にすること
+- 1 ターンで関心の違う作業を同時にやること（例: スコープ外し＋大規模復元＋複数 HTML）
+
+**必須**
+
+- **触る前にファイルコピーで bak**（例: `.tmp-bak-<時刻>-lp-code.css`）。退避に git を使わない
+- **関心は 1 ステップ**。失敗したらそこで止め、bak から戻す（`git checkout` は使わない）
+- **現行ファイルへの外科編集** — まず Cursor の **StrReplace**。どうしても一括なら短い `node … utf8` のみ。フルファイル再生は最終手段かつユーザー承認後
+- エージェント失敗時の Undo 正本は **Checkpoint**。Local History / Timeline は「ファイルを開いたまま保存した」場合の補助。git checkout で Undo しない
+
 ---
 
 ## 3. ページ構成（セクション地図）
@@ -115,10 +133,10 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 - **他方式が部屋を冷やす／熱を奪う、とは書かない。** 他方式は構造の記述に留める。
 - 現在の `preview.html` 導入部は preview4 構成。`works.html` は preview をソースに再変換する（§12）。コピー確定前は §7 を再点検する。
 - **オファー先行（coupon / offer / purchase を導入部より上）は確定仕様。入れ替えを提案しないこと。**
-- 導入のタイポ／シーンは **`.intro3-*` / `.p4-*`**（`body.preview3.preview4`）。明帯の旧 `.intro-hook__ask` 構成には戻さない。
+- 導入のタイポ／シーンは **`.intro3-*` / `.p4-*`**（構造クラス。`body.preview*` スコープには依存しない）。明帯の旧 `.intro-hook__ask` 構成には戻さない。
 - **導入部にピン留め（sticky scrub）は置かない。** 導入セクションも原則 `min-height:100svh` / `height:*svh` で嵩上げしない（コンテンツ駆動）。**例外は `#introHook` 動画ヒーローのみ**（PC `60svh`。他章へ広げない）。
 - `img/winter_morning.jpg` は `preview3.html` の `#introHook` 背景に限り使用可。マスク・咳を想起させる写真のため、改善・予防など身体効果の断定とは組み合わせない。
-- 製品モード（黒帯）は `.steam-answer` から始める。p4 中間は `#223b59`（`--bg-intro`）の intro 拡張トーン。
+- 製品モード（黒帯）は `.steam-answer` から始める。p4 中間は `#264263`（`--bg-intro`）の intro 拡張トーン。
 - `steam-beyond`: 章主題は h2、「約6倍速く」は **h3**。
 - メリット／メンテ: 独立 `section` + 各自 h2。`.lp-carousel` / `.lp-card`（SP縦／PC横）。
 - `dry-stress__close` / `steam-design__feature-text` / `lp-close__end`: 見た目の締めは **見出しタグ**。
@@ -133,7 +151,7 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 
 | トークン | 用途 |
 |----------|------|
-| `--bg` / `--bg-dark` / `--bg-slate` / `--bg-intro` / `--bg-cool` | 白／黒／中間スレート（`#1c2b3c`）／導入帯（`#223b59`）／クール面 |
+| `--bg` / `--bg-dark` / `--bg-slate` / `--bg-intro` / `--bg-cool` | 白／黒／中間スレート（`#1c2b3c`）／導入帯（`#264263`）／クール面 |
 | `--ink` / `--ink-muted` | 明帯テキスト |
 | `--ink-cool` / `--ink-cool-muted` | クール帯テキスト |
 | `--ink-on-dark` / `--muted-on-dark` | 暗帯テキスト |
@@ -147,6 +165,8 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 | 役割 | トークン | 使い所 |
 |------|----------|--------|
 | 大見出し／大リード | `--type-h-lg-*` / `--type-lead-lg-*` | 章のテーマ宣言 |
+| サブタイトル | `--type-sub-*`（size / lh / ls / weight / gap） | 章頭 eyebrow。`.lp-band__eyebrow` / `.intro3-sub`（色だけ別） |
+| 見出し1段下げ | `.lp-title--sm`（`--type-h-md-*`） | 章頭タイトル全体、または行内 span。lg を md に落とす |
 | 中見出し／中リード | `--type-h-md-*` / `--type-lead-md-*` | 章内の機能・詳細 |
 | カード | `--card-title-*` / `--card-body-*` / `--card-note-*` | カード内 |
 | 注記 | `--type-note-*` | ※注など |
@@ -159,11 +179,11 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 
 | | 大 `lp-band--lg` | 中 `lp-band--md` |
 |--|------------------|------------------|
-| フォント | `--type-h-lg-*` / `--type-lead-lg-*` | `--type-h-md-*` / `--type-lead-md-*` |
+| 章頭タイポ | 共通（`--type-h-lg-*` / `--type-lead-lg-*`） | 同左 |
 | SP のリード | **中央** | **左寄せ** |
 | PC のリード | 中央 | 中央 |
 
-切り分けはこの2点だけ。中バンドに `.steam-answer__lead`（大リード）を流用しない（`.steam-design__lead` 等の中リードを使う）。
+切り分けは **SP リードの寄せだけ**。章頭のフォントサイズに `--lg` / `--md` の差はない。中バンドに章頭以外へ `.lp-band__lead` を流用しない（本文説明は `.steam-design__lead` 等の中リード）。
 
 ### 黒帯のタイトル領域（`lp-band__*`）
 
@@ -180,9 +200,9 @@ Cursor / Claude Code / 第三者コーダーは、実装前に本ファイルを
 ```
 
 - `.lp-band__head` — タイトル領域の幅・中央配置（**横ガターは親セクション殻**。head 自身に `padding-inline` を付けない）
-- `.lp-band__eyebrow` — 見出しではないアクセント付きサブタイトル
-- `.lp-band__title` — section 主題の h2。サイズは親の `lp-band--lg / --md` で決める
-- `.lp-band__lead` — リード。サイズと SP 寄せは親の `lp-band--lg / --md` で決める
+- `.lp-band__eyebrow` — 見出しではないアクセント付きサブタイトル。サイズ／余白は `--type-sub-*`（導入の `.intro3-sub` と共通。色だけ別）
+- `.lp-band__title` — section 主題の h2。サイズは常に `--type-h-lg-*`
+- `.lp-band__lead` — 章頭リード専用。サイズは常に `--type-lead-lg-*`。SP 寄せだけ親の `lp-band--lg / --md` で決める。**章途中の説明文・h3 直下には付けない**
 - 既存の `.tank-title` / `.steam-design__title` 等を構造上残す場合も、h2 には必ず `.lp-band__title` を併記する
 - 固有 section セレクタで `font-size` / `line-height` / `font-weight` / `letter-spacing` / `color` / `text-align` を上書きしない
 - タイトル直下にリードがない場合は、存在しない要素を追加せず `.lp-band__title` だけ使う
@@ -432,19 +452,11 @@ initRevealInView('.reveal');
 
 ### 日本語の折返し（`word-break` / `text-wrap`）
 
-正本は `css/lp-code.css` 先頭のリセット直後にある1ルールのみ。**セクションごとに折返しを再指定しない。**
+**禁止（依頼なしでは絶対に書かない）:** `text-wrap` / `word-break` / `overflow-wrap` / `word-wrap`  
+折返しはブラウザ既定のみ。セクション・共通セレクタへの再指定もしない。使う場合はユーザーが明示したときだけ。
 
-```css
-p,li,dd,dt,figcaption,small,strong,blockquote,
-h1,h2,h3,h4,h5,h6{ text-wrap:pretty; }
-```
-
-- **`word-break:auto-phrase` は使わない。** Chromium ＋ `lang="ja"` 限定で、iOS Safari では効かない。「どこで折るか」を言語規則で変えるプロパティなので、対応／非対応で別の組版になり、Edge で回す [`layout-audit.mjs`](layout-audit.mjs) では iPhone 実機の結果を検証できない。幅が少し変わるだけで切れ目が文節ひとつ分ジャンプし、1行目が大きく余る事故が起きる
-- **`text-wrap:pretty` は可。** 折る位置の規則は変えず、最終行が1〜2文字だけになるのを避けるだけ。非対応ブラウザでは何も起きないため機種差で意味が食い違わない（SP390px 実測で孤立最終行 19件 → 6件、1文字の孤立はゼロ）
-- **`text-wrap:balance` は現在不使用。** 見出しの行長を揃える効果はあるが、幅による振れ幅が大きいため使わない
+- 狙った改行だけ `.br-sp` / `.br-pc` で明示する（§9「SP 改行」）
 - 熟語が行末で割れるのは日本語組版として正常。1文字ずつ `<br>` で潰さない
-- 狙った改行は `.br-sp` / `.br-pc` で明示する（§9「SP 改行」）
-- 局所的にどうしても分割を止めたいときだけ `word-break:keep-all`
 
 ### 画像・a11y
 
@@ -476,7 +488,8 @@ h1,h2,h3,h4,h5,h6{ text-wrap:pretty; }
 
 ## 11. やってはいけないこと（要約）
 
-- ユーザー依頼なしの git commit / push / amend
+- ユーザー依頼なしの **あらゆる git 操作**（commit / push / amend / checkout / restore / reset / stash 等）。WIP 破棄・Undo に checkout を使わない（§2「WIP 編集の安全規則」）
+- 日本語 HTML/CSS 本文の PowerShell 読み書き・置換（§2）
 - secrets（`.env` 等）のコミット
 - 見出しの `p`/`div` 落とし、複数 h1、階層スキップ
 - 効能・断定・無根拠 No.1 の無断強化
@@ -492,6 +505,7 @@ h1,h2,h3,h4,h5,h6{ text-wrap:pretty; }
 - HTML コメントに LP の論理・狙い・編集意図を書かない（共感／再定義／結論、製品モード、など）。公開HTMLに残る
 - セクション区切りコメントも本文 HTML には置かない。構成はクラスと本ファイルの地図、EC用は `{# lp-code-* #}` だけ（CSS 内の実装コメントは対象外）
 - [`lp-code-vars.md`](lp-code-vars.md) にない `{# lp-code-* #}` の無断作成（本番未登録の変数が紛れ込む）
+- ユーザー明示依頼なしの `text-wrap` / `word-break` / `overflow-wrap` / `word-wrap`（§9「日本語の折返し」）
 
 ---
 
@@ -503,7 +517,7 @@ h1,h2,h3,h4,h5,h6{ text-wrap:pretty; }
 
 やることは **切れ目コメント** と **パス置換** だけ。本文の文言・価格は preview から持ち込み、変換作業中に勝手に変えない。`<title>` は [`lp-code-vars.md`](lp-code-vars.md) と一致しているか照合する（不一致は直さず報告。変更は正本更新のあと）。`<meta name="description">` は HTML に置かない（本番挿入）。
 - head 同期時は [`LLMO.md`](LLMO.md) の「構造化データの立証チェック」に従い、本文で立証できない語（例：高い安全性・自動洗浄・静音）が Product / `og:description` に残っていないか確認し、あれば**警告して完了扱いにしない**。
-- `body` には preview と同じく `preview3 preview4` を付ける（導入 CSS が依存）。`data-fix-cta-after` も preview に合わせる。
+- `body` に `preview3 preview4` は **不要**（導入 CSS は構造クラスのみ。付けても無害）。`data-fix-cta-after` は `#fixCta` に置き、preview に合わせる。
 
 ### 部分テンプレ変数
 
